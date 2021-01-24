@@ -1,0 +1,26 @@
+{
+  "name": "feathercore",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "Dolraith",
+  "contributors": [],
+  "dependencies": {
+    "express": "^4.17.1",
+    "glob": "^7.1.6",
+    "mysql": "^2.18.1",
+    "serve-favicon": "^2.5.0"
+  },
+  "description": "Feather Core system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node public/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC"
+}
