@@ -7,3 +7,7 @@
 module.exports.getPathFavicon = function(){
     return __dirname + "/modules/feather_core/images/favicon.png";
 };
+
+module.exports.getSiteName = function(){
+    return "Feather Core";
+}

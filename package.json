@@ -11,6 +11,7 @@
   "author": "Dolraith",
   "contributors": [],
   "dependencies": {
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "glob": "^7.1.6",
     "mysql": "^2.18.1",

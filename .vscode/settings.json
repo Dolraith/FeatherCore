@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+        ".vscode": true,
+        "nbproject": true,
+        "public/.vs": true
+    },
+    "vetur.format.defaultFormatter.ts": "vscode-typescript",
+    "javascript.format.enable": false
+}
