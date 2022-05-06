@@ -16,7 +16,7 @@ const Settings = require("./settings.js");
 const favicon = require("serve-favicon");
 //--------
 const app = express();
-const port = 99;
+const port = 80;
 global._router = router.getInstance();
 global.settings = Settings;
 global.server_root = __dirname;
