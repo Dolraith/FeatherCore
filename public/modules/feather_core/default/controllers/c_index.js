@@ -1,10 +1,12 @@
 /* global global */
 var Controller = require(global.classPaths.controller);
+var Data_User = require(global.classPaths.data.user)
 
 class CIndex extends Controller {
-    index(){
-        //global._body = this.GetChunk('modules/feather_core/default/templates/t_index.html');
+    async index(){
+        var bob = await(Data_User.id(2))
+        console.log(bob)
         this.setView('modules/feather_core/default/views/v_index');
     }
 };
-module.exports = CIndex;
+module.exports=CIndex

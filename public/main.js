@@ -23,7 +23,12 @@ global.server_root = __dirname;
 global._dependency_dictionary = new dependency_dictionary();
 global.classPaths = {
     controller: __dirname + "/modules/feather_core/classes/controller",
-    view: __dirname + "/modules/feather_core/classes/view"
+    view: __dirname + "/modules/feather_core/classes/view",
+    sql: __dirname + "/modules/feather_core/classes/db_maria",
+    data: {
+        user: __dirname + "/modules/feather_core/classes/data/data_user"
+    },
+    data_super: __dirname + "/modules/feather_core/classes/data_class"
 };
 
 app.use(favicon(Settings.getPathFavicon()));
@@ -67,8 +72,9 @@ app.all("/*", (req, res) => {
         if (controller === null) {
             res.send("Unknown path." + safePath);
         } else {
-            var control = require(controller);
-            new control();
+            var Control = require(controller);
+            console.log(Control)
+            new Control();
         }
     });
 });
@@ -81,4 +87,6 @@ function safify(url) {
     if (url === "") {
         return "/";
     }
+    //TODO: safify the url
+    return url
 }

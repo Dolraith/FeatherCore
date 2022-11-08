@@ -11,16 +11,16 @@ class dependency_dictionary{
     getDependency(name){
         return this.dependencies[name];
     }
-    getDependencyInclude(name){
+    getDependencyInclude(name, spacer=''){
 
         if(this.dependencies[name] === undefined){
             return '';            
         }else{            
-            var result = '<!--'+name+'-->';
+            var result = spacer + '<!--'+name+'-->\n';
             var dep = this.dependencies[name];
             for(var type in dep){
                 for(var line in dep[type]){
-                    result += dep[type][line] + "\n";
+                    result += spacer + dep[type][line] + "\n";
                 }
             }
             return result;

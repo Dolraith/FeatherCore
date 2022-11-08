@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\!Hoard"
+		}
+	],
+	"settings": {
+		"vetur.format.defaultFormatter.ts": "vscode-typescript",
+		"javascript.format.enable": false,
+		"prettier.tabWidth": 4
+	}
+}
