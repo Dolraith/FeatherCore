@@ -9,14 +9,20 @@
 
 //Requires
 const express = require("express");
+const fs = require('fs');
 const glob = require("glob");
+const path = require('path');
 const router = require("./modules/feather_core/classes/router");
+const staticServer = require('node-static');
 const dependency_dictionary = require('./modules/feather_core/classes/dependency_dictionary');
 const Settings = require("./settings.js");
 const favicon = require("serve-favicon");
 //--------
 const app = express();
 const port = 80;
+
+const static_extentions = ["js","css","png","jpg"];
+
 global._router = router.getInstance();
 global.settings = Settings;
 global.server_root = __dirname;
@@ -31,52 +37,70 @@ global.classPaths = {
     data_super: __dirname + "/modules/feather_core/classes/data_class"
 };
 
+var file = new(staticServer.Server)(__dirname);
+
 app.use(favicon(Settings.getPathFavicon()));
 //serve static files
-app.use("/*.js", express.static('public'));
-app.use("/*.css", express.static('public'));
+//app.use("/*", express.static('public',{extensions: ['js', 'css','png']}));
 //todo: images
 app.all("/*", (req, res) => {
-    global._response = res;
-    global._query = res.query;
-    //Set up dependencies
-    //module dependencies
-    glob(__dirname + "/*/*/dependencies.js", {}, (err, files) => {
-        if (err) {
-            //TODO: Handle errors
-            res.send(
-                "Dependency files are incorrectly set up. Please contact a site administrator."
-            );
-        }
-        for (var file of files) {
-            require(file);
-        }
-    });
-    //project dependencies. project should override the modules
-    require(__dirname + "/dependencies.js");
-    //set up routes and execute
-    glob(__dirname + "/*/*/routes.js", {}, (err, files) => {
-        if (err) {
-            //TODO: Handle errors here
-            res.send(
-                "Routes setup was done incorrectly. Please contact a site administrator."
-            );
-        }
-        for (var file of files) {
-            require(file);
-        }
 
-        var safePath = safify(req.params[0]);
+    //check if static files
+    var filepath = path.normalize(req.params[0]);
+    if(filepath[filepath.length-1] == '\\'){
+        filepath = filepath.slice(0, filepath.length - 1);
+    }
+    if(filepath[0] == '.')filepath = filepath.slice(1);
 
-        var controller = global._router.getController(safePath);
-        if (controller === null) {
-            res.send("Unknown path." + safePath);
-        } else {
-            var Control = require(controller);
-            console.log(Control)
-            new Control();
-        }
-    });
+    if(filepath != '' && fs.existsSync(__dirname + "/" + filepath)){
+        parts = filepath.split(".");
+        if(static_extentions.includes(parts[parts.length - 1])){
+            file.serve(req, res);
+        }        
+    }
+    else{
+        global._response = res;
+        global._query = res.query;
+        var globroot = __dirname.replaceAll('\\','/') + "/**/";
+        //Set up dependencies
+        //module dependencies
+        glob(globroot + "dependencies.js", {}, (err, files) => {
+            if (err) {
+                //TODO: Handle errors
+                res.send(
+                    "Dependency files are incorrectly set up. Please contact a site administrator."
+                );
+            }
+            for (var file of files) {
+                require(file);
+            }
+        });
+        //project dependencies. project should override the modules
+        //require(__dirname + "/dependencies.js");
+        //set up routes and execute
+        glob(globroot + "routes.js", {}, (err, files) => {
+            if (err) {
+                //TODO: Handle errors here
+                console.log(err);
+                res.send(
+                    "Routes setup was done incorrectly. Please contact a site administrator."
+                );
+            }
+            for (var file of files) {
+                require(file);
+            }
+
+            var safePath = safify(req.params[0]);
+
+            var controller = global._router.getController(safePath);
+            if (controller === null) {
+                res.send("Unknown path." + safePath);
+            } else {
+                var Control = require(controller);
+                new Control();
+            }
+        });
+    }
 });
 
 app.listen(port, () => {
@@ -84,9 +108,8 @@ app.listen(port, () => {
 });
 
 function safify(url) {
-    if (url === "") {
-        return "/";
-    }
+    if (url[0] === '.') url=url.splice(1);
+    if (url === "")return "/";
     //TODO: safify the url
     return url
 }

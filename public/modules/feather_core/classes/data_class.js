@@ -1,7 +1,7 @@
 var SQL = require(global.classPaths.sql)
 
 class Data_Class{
-    constructor(query = "select *", callback = function(data){console.log(data)}){
+    constructor(query = "select *", callback = function(data){}){
         this.table = "notable"
         this.data = {}
         this.data["_id"] = null;
@@ -20,7 +20,7 @@ class Data_Class{
     }
 
     loaded(){
-        console.log(this.data)
+        //console.log(this.data)
     }
 
     async loadOne(query){
