@@ -1,0 +1,88 @@
+<div id="vuemain">
+    <div class="control-group">
+        <h3>Spirits   <button class="btn btn-primary" v-on:click="addSpirit">Add Spirit</button></h3>
+        
+    </div>
+    <hr>
+    <div v-for="(spirit,spiritIndex) in spiritList">
+        <div class="card">
+            <div class="card-body container">
+                <div class='row form'>
+                    <div class="col-sm">
+                        <label>Type</label>
+                        <select v-model:value="spirit.type" class="form-control" v-on:change="forceTypeEleCompliance(spiritIndex)">
+                            <option v-for="type in types">{{type}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <label>Element</label>
+                        <select v-model:value="spirit.element" class="form-control" v-on:change="calcSpirit(spiritIndex)">
+                            <option v-for="element in elements[spirit.type]">{{element}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm">
+                        <label>Force</label>
+                        <select v-model:value="spirit.force" class="form-control" v-on:change="calcSpirit(spiritIndex)">
+                            <option v-for="i in 20">{{i}}</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm">
+                        Body: <b>{{spirit.body}}</b><br>
+                        Strength:  <b>{{spirit.strength}}</b><br>
+                        Intuition: <b>{{spirit.intuition}}</b>
+                        Physical Initiative: {{spirit.phys_init}}<br>
+                    </div>
+                    <div class="col-sm">
+                        Agility: <b>{{spirit.agility}}</b><br>
+                        Willpower: <b>{{spirit.willpower}}</b><br>
+                        Charisma: <b>{{spirit.charisma}}</b><br>
+                        Astral Initiative: {{spirit.astral_init}}<br>
+                    </div>
+                    <div class="col-sm">
+                        Reaction: <b>{{spirit.reaction}}</b><br>
+                        Logic: <b>{{spirit.logic}}</b><br>
+                        Magic: <b>{{spirit.magic}}</b>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class='col-3'>Phys Condition:</div>
+                            <div class="col-9">
+                                <input disabled v-bind:checked="i<=spirit.condition_phys_cur" v-for="i in spirit.condition_phys_max" type="checkbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class='col-3'>Stun Condition:</div>
+                            <div class="col-9">
+                                <input disabled v-bind:checked="i<=spirit.condition_stun_cur" v-for="i in spirit.condition_stun_max" type="checkbox">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-group">
+                                <button class="btn btn-secondary btn-sm form-control" v-on:click="damage(spiritIndex, true)">Heal</button>
+                                <select v-model="spirit.cur_dmg_val" class="form-control">
+                                    <option v-for="i in 20">{{i}}</option>
+                                </select>
+                                <select v-model="spirit.cur_dmg_mode" class="form-control">
+                                    <option value="phys">Physical</option>
+                                    <option value="stun">Stun</option>
+                                </select>
+                                <button class="btn btn-secondary btn-sm form-control" v-on:click="damage(spiritIndex, false)">Damage</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        Modifier: <b>{{spirit.pool_modifier}}</b>
+                    </div>
+                </div>
+                
+            </div>
+            <button class="btn btn-primary btn-sm" v-on:click="removeSpirit(spiritIndex)">X</button>
+        </div>
+    </div>
+</div>

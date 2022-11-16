@@ -3,8 +3,8 @@ class v_index extends View{
     constructor(){        
         super();
         this.addDependency('bootstrap');
-        this.addDependency(['module/feather_core/default/js/j_index.js'],'js')
-        this.setTemplate('modules/feather_core/default/templates/t_index.html');
+        this.addDependency(['modules/feather_core/default/_js/j_index.js'],'js')
+        this.setTemplate('modules/feather_core/default/_templates/t_index.html');
     }    
 }
 module.exports = v_index;

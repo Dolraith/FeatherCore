@@ -6,7 +6,7 @@ class CIndex extends Controller {
     async index(){
         var bob = await(Data_User.id(2))
         //console.log(bob)
-        this.setView('modules/feather_core/default/views/v_login');
+        this.setView('modules/feather_core/default/_views/v_index');
     }
 };
 module.exports=CIndex

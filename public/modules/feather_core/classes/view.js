@@ -6,8 +6,8 @@ class view {
             css:[],
             named:[]
         }
-        this.header = 'modules/feather_core/default/templates/header.html';
-        this.footer = 'modules/feather_core/default/templates/footer.html';
+        this.header = 'modules/feather_core/default/_templates/header.html';
+        this.footer = 'modules/feather_core/default/_templates/footer.html';
         this.template = null;
     }
     getPageTemplate(){
