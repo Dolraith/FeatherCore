@@ -108,8 +108,14 @@ app.listen(port, () => {
 });
 
 function safify(url) {
-    if (url[0] === '.') url=url.splice(1);
-    if (url === "")return "/";
-    //TODO: safify the url
-    return url
+    try{
+        if (url[0] === '.') url=url.splice(1);
+        if (url === "")return "/";
+        return url
+    }catch(ex){
+        console.log("Ecountered exception.");
+        console.log(ex);
+        return "/";
+    }
+    //TODO: safify the url    
 }
