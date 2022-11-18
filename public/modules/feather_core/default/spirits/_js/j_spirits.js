@@ -134,6 +134,18 @@ window.onload = function(){var vue = new Vue({
             }
             this.calcSpirit(index);
         },
+        getSpiritVisibility(force){
+            if(force == 1)return "Minor spirit, not noticable."
+            if(force == 2)return "Proof that you are not entirely incompetent."
+            if(force == 3)return "Common spirit used by a ton of mages."
+            if(force == 4)return "Standard combat spirit."
+            if(force == 5)return "Spirit belonging to a talented magician, people may take notice."
+            if(force == 6)return "Things are getting serious, unauthorized use in urban areas will be persecuted."
+            if(force < 8) return "A threat of this caliber cannot be left without repercussions."
+            if(force < 12)return "Regional-level threat."
+            if(force < 16)return "A national-level threat."
+            else return "A global threat."
+        },
         removeSpirit(spiritIndex){
             this.spiritList.splice(spiritIndex,1);
         }
