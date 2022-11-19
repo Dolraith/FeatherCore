@@ -11,13 +11,16 @@
   "author": "Dolraith",
   "contributors": [],
   "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.1",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "glob": "^8.0.3",
     "mariadb": "^3.0.2",
     "node-static": "^0.7.11",
     "serve-favicon": "^2.5.0",
-    "vue": "^3.2.44"
+    "session-file-store": "^1.5.0"
   },
   "description": "Feather Core system",
   "main": "index.js",

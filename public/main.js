@@ -8,7 +8,11 @@
 //--------
 
 //Requires
+const bcrypt = require('bcrypt');
 const express = require("express");
+const session = require("express-session");
+const bp = require('body-parser');
+const FileStore = require("session-file-store")(session);
 const fs = require('fs');
 const glob = require("glob");
 const path = require('path');
@@ -38,8 +42,23 @@ global.classPaths = {
 };
 
 var file = new(staticServer.Server)(__dirname);
-
+var sess_options = {
+    path: "./tmp/sessions/",  //directory where session files will be stored
+    useAsync: true,
+    reapInterval: 5000,
+  };
+var secret = bcrypt.hashSync(new Date().toISOString(), 10);
+app.use(session({
+    store: new FileStore(sess_options),
+    secret: secret,
+    resave: false,
+    saveUninitialized: true
+}));
 app.use(favicon(Settings.getPathFavicon()));
+
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
+
 //serve static files
 //app.use("/*", express.static('public',{extensions: ['js', 'css','png']}));
 //todo: images
@@ -59,8 +78,8 @@ app.all("/*", (req, res) => {
         }        
     }
     else{
-        global._response = res;
-        global._query = res.query;
+//        global._response = res;
+//        global._query = res.query;
         var globroot = __dirname.replaceAll('\\','/') + "/**/";
         //Set up dependencies
         //module dependencies
@@ -94,10 +113,10 @@ app.all("/*", (req, res) => {
 
             var controller = global._router.getController(safePath);
             if (controller === null) {
-                res.send("Unknown path." + safePath);
+                res.send("Unknown path: " + safePath);
             } else {
-                var Control = require(controller);
-                new Control();
+                var Control = require(controller.path);
+                new Control(req, res, controller.action);
             }
         });
     }

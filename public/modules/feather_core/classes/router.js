@@ -1,5 +1,4 @@
 /* global global */
-
 class RouterInner {
     routes = {};   
 
@@ -8,10 +7,24 @@ class RouterInner {
     }
 
     getController(url) {
+        var path = url;
+        var action = 'index';
         if (this.routes[url] === undefined) {
-            return null;
+            var parts = url.split('/');
+            if(parts.length == 1){
+                return null;
+            }else{
+                action = parts[parts.length - 1];
+                parts.pop();
+                url = parts.join("/");
+                if(this.routes[url] === undefined){
+                    return null;
+                }
+            }
         }
-        return global.server_root + "/" + this.routes[url];
+        //return global.server_root + "/" + this.routes[url];
+        path = global.server_root + "/" + this.routes[url];
+        return {path:path, action:action};
     }
 
     setRoutes(routes, controller) {

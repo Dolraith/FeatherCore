@@ -1,11 +1,12 @@
 const Utility = require('./utility');
 class view {
-    constructor(){
+    constructor(viewData){
         this.dependencies = {
             js:[],
             css:[],
             named:[]
         }
+        this._data = viewData;
         this.header = 'modules/feather_core/default/_templates/header.html';
         this.footer = 'modules/feather_core/default/_templates/footer.html';
         this.template = null;
@@ -20,6 +21,10 @@ class view {
         }
         compiled_template+=Utility.getChunk(this.footer);
         return compiled_template;
+    }
+
+    getDataProp(key){
+        return this._data[key];
     }
 
     setHeader(headerPath){
