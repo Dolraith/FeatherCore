@@ -36,7 +36,12 @@ global.classPaths = {
     view: __dirname + "/modules/feather_core/classes/view",
     sql: __dirname + "/modules/feather_core/classes/db_maria",
     data: {
-        user: __dirname + "/modules/feather_core/classes/data/data_user"
+        user: __dirname + "/modules/feather_core/classes/data/data_user",
+        spirits:{
+            type:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_type",
+            power:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_power",
+            skill:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_skill",
+        }
     },
     data_super: __dirname + "/modules/feather_core/classes/data_class"
 };

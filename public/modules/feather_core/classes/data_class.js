@@ -15,6 +15,13 @@ class Data_Class{
         }
     }
 
+    inflate(dictionary){
+        for(var i in dictionary){
+            if(i == "_id" || i == "_created" || i == "_modified")continue;
+            this.set(i, dictionary[i]);
+        }
+    }
+
     set(property, value){
         if(property == "_id"){
             console.warn("You can't change _id of an object.");
@@ -62,15 +69,15 @@ class Data_Class{
         for(var key in data){
             if(key == "_id" || key == "_modified" || key == "_created")continue;
             var val = data[key];
-            if(typeof(val) == "number" || typeof(val) == "boolean"){
-                cols.push(key + " = " + data[key] + " ");
-            }else{
-                cols.push(key + " = \"" + data[key] + "\" ");
-            }
+            //if(typeof(val) == "number" || typeof(val) == "boolean"){
+            //    cols.push(key + " = " + data[key] + " ");
+            //}else{
+                cols.push(" " + key + " = \"" + data[key] + "\"");
+            //}
         }
         var fullQuerry = '';
         if(data["_id"] != null){
-            fullQuerry = "UPDATE " + this.table + " SET " + cols.join(',') + " WHERE id=" + data["_id"] + ";"
+            fullQuerry = "UPDATE " + this.table + " SET " + cols.join(',') + " WHERE _id=" + data["_id"] + ";"
             var result = await SQL.save(fullQuerry);
         }
         else{

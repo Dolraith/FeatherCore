@@ -9,4 +9,4 @@ global._router.setRoutes(['err'], 'modules/feather_core/default/users/_controlle
 
 /* To be moved over to hoard */
 global._router.setRoutes(['spirits'], 'modules/feather_core/default/spirits/_controllers/c_spirits')
-global._router.setRoutes(['spiritAdmin'], 'modules/feather_core/default/spirits/_controllers/c_spiritAdmin')
+global._router.setRoutes(['spirit_admin'], 'modules/feather_core/default/spirits/_controllers/c_spirit_admin')

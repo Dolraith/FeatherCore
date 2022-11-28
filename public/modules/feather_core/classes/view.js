@@ -7,6 +7,7 @@ class view {
             named:[]
         }
         this._data = viewData;
+        this._vueData = {}
         this.header = 'modules/feather_core/default/_templates/header.html';
         this.footer = 'modules/feather_core/default/_templates/footer.html';
         this.template = null;
@@ -19,10 +20,15 @@ class view {
         if(this.template!==null){
             compiled_template+=Utility.getChunk(this.template);
         }
-        compiled_template+=Utility.getChunk(this.footer);
+        var footer = Utility.getChunk(this.footer);
+        footer = footer.replace("<?data_marker?>", JSON.stringify(this._vueData));
+        compiled_template+=footer;
         return compiled_template;
     }
 
+    setVueData(key, value){
+        this._vueData[key] = value;
+    }
     getDataProp(key){
         return this._data[key];
     }

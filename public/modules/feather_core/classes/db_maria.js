@@ -15,7 +15,8 @@ async function load(query, callback){
     } catch (err) {
         throw err;
     } finally {
-        if (conn) return conn.end();
+        if (conn) conn.end();
+        return rows;
     }
 }
 

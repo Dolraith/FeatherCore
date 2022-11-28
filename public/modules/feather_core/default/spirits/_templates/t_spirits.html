@@ -9,24 +9,25 @@
         <div class="card-body container">
             <div class='row form'>
                 <div class="col-sm">
-                    <label>Type</label>
+                    <label class="font-weight-bold">Type</label>
                     <select v-model:value="spirit.type" class="form-control" v-on:change="forceTypeEleCompliance(spiritIndex)">
                         <option v-for="type in types">{{type}}</option>
                     </select>
                 </div>
                 <div class="col-sm">
-                    <label>Element</label>
+                    <label class="font-weight-bold">Element</label>
                     <select v-model:value="spirit.element" class="form-control" v-on:change="calcSpirit(spiritIndex)">
                         <option v-for="element in elements[spirit.type]">{{element}}</option>
                     </select>
                 </div>
                 <div class="col-sm">
-                    <label>Force</label>
+                    <label class="font-weight-bold">Force</label>
                     <select v-model:value="spirit.force" class="form-control" v-on:change="calcSpirit(spiritIndex)">
                         <option v-for="i in 20">{{i}}</option>
                     </select>
                 </div>
                 <div class="col-sm">
+                    <label class="font-weight-bold">Spirit Noticibility</label>
                     <div>{{getSpiritVisibility(spirit.force)}}</div>
                 </div>
             </div>

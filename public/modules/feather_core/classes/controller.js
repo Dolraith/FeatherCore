@@ -35,6 +35,8 @@ class Controller{
             await this[action]();
             this.viewComposit();
         }else{
+            //if(this._request.headers)
+            console.log(this._request.headers);
             this.sendError("Unknown action: " + action, false);
         }        
     }
