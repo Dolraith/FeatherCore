@@ -1,4 +1,5 @@
 
+
 <div class="control-group">
     <h3>Spirits   <button class="btn btn-primary" v-on:click="addSpirit">Add Spirit</button></h3>
     
@@ -36,7 +37,7 @@
                 <div class="col-sm">
                     Body: <b>{{spirit.body}}</b><br>
                     Strength:  <b>{{spirit.strength}}</b><br>
-                    Intuition: <b>{{spirit.intuition}}</b>
+                    Intuition: <b>{{spirit.intuition}}</b><br>
                     Physical Initiative: {{spirit.phys_init}}<br>
                 </div>
                 <div class="col-sm">
@@ -84,8 +85,79 @@
                     Modifier: <b>{{spirit.pool_modifier}}</b>
                 </div>
             </div>
-            
+            <hr>
+            <!---Skills-->
+            <div class="row" v-if="spirit.skillDetails" v-on:click="toggleSkillDetails(spiritIndex)">
+                <table class="table table-striped">
+                    <thead>
+                        <th>Skill [-]</th>
+                        <th>Pool</th>
+                        <th>Attribute</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="skill in spirit.skills">
+                            <td>{{skill.name}}</td>
+                            <td>{{skill.pool}}</td>
+                            <td>{{skill.attribute}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" v-if="spirit.skillDetails == false" v-on:click="toggleSkillDetails(spiritIndex)">
+                <b>Skills: [+]</b>
+                <div>{{condenseSkills(spirit)}}</div>
+            </div>
+            <hr>
+            <!---Powers-->
+            <div class="row">
+                <div><b>Powers</b></div>
+                <div>Required: <span class="badge badge-secondary" v-for="power in spirit.powers.required" @mouseover="powerTooltipToggle(power,true)" @mouseleave="powerTooltipToggle(power,false)">{{power.name}}  <i class="bi bi-question-circle"></i></span></div>       
+                <div>Optional: <div v-if='spirit.powers.picked.length > spirit.powers.numOptional' class="margin-left: 15px; badge badge-danger">!Too Many Powers!</div> 
+                    <button v-on:click="pickPowers(spirit, spiritIndex)" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#powerPickModal"><i class="bbi bi-wrench"></i></button>
+                    <span style="margin-right: 5px;" class="badge badge-secondary" v-for="power in spirit.powers.picked" @mouseover="powerTooltipToggle(power,true)" @mouseleave="powerTooltipToggle(power,false)">{{power.name}} <i class="bi bi-question-circle"></i></span>
+                </div>
+            </div>
         </div>
         <button class="btn btn-primary btn-sm" v-on:click="removeSpirit(spiritIndex)">X</button>
     </div>
 </div>
+
+<div class="modal fade" id="powerPickModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pick Powers<div v-bind:class="(optionalPowers.picked.length>optionalPowers.numOptional)?'badge badge-danger':'badge badge-success'">{{optionalPowers.picked.length}}/{{optionalPowers.numOptional}}</div></h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+                <th>Picked</th>
+                <th>Name</th>
+                <th>Description</th>
+            </thead>
+            <tr v-for="option in optionalPowers.options">
+                <td>
+                    <label class="form-check-custom">
+                        <input type="checkbox" v-model="optionalPowers.picked" v-bind:value="option._id"/>
+                    </label>
+                </td>
+                <td>{{option.name}}</td>
+                <td><i class="bi bi-question-circle"></i></td>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="pickPowersOk()">OK</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<transition name="bounce">
+    <div class="info modal fade" v-if="powerTooltip.show == true">
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+    </div>
+</transition>

@@ -1,0 +1,27 @@
+$purple: #800080;
+$nav-bg: #F5F7FA;
+$white: #ffffff;
+$orange: #FFB715;
+$blue:#016BA8;
+$muted:#707070;
+
+.container{
+    margin-top: 50px;
+    padding: 25px;
+    background: $nav-bg;
+    border-radius: 5px;
+}
+.info{
+    background: $blue;
+    color: $white !important;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.55);
+    width: 30%;
+    position: absolute;
+    z-index: 500;
+    p{
+        color: #ffffff;
+        font-size: 13px;
+    }
+}

@@ -10,9 +10,10 @@
 //Requires
 const bcrypt = require('bcrypt');
 const express = require("express");
-const session = require("express-session");
+//const session = require("express-session");
+const session = require('cookie-session');
 const bp = require('body-parser');
-const FileStore = require("session-file-store")(session);
+//const FileStore = require("session-file-store")(session); 
 const fs = require('fs');
 const glob = require("glob");
 const path = require('path');
@@ -25,7 +26,7 @@ const favicon = require("serve-favicon");
 const app = express();
 const port = 80;
 
-const static_extentions = ["js","css","png","jpg"];
+const static_extentions = ["js","css","scss","png","jpg"];
 
 global._router = router.getInstance();
 global.settings = Settings;
@@ -47,18 +48,25 @@ global.classPaths = {
 };
 
 var file = new(staticServer.Server)(__dirname);
-var sess_options = {
-    path: "./tmp/sessions/",  //directory where session files will be stored
-    useAsync: true,
-    reapInterval: 5000,
-  };
+//var sess_options = {
+//    path: "./tmp/sessions/",  //directory where session files will be stored
+//    useAsync: true,
+//    reapInterval: 5000,
+//  };
 var secret = bcrypt.hashSync(new Date().toISOString(), 10);
+//app.use(session({
+ //   store: new FileStore(sess_options),
+  //  secret: secret,
+   // resave: false,
+   // saveUninitialized: true
+//}));
 app.use(session({
-    store: new FileStore(sess_options),
-    secret: secret,
-    resave: false,
-    saveUninitialized: true
-}));
+    name: 'session',
+    keys: [secret],
+  
+    // Cookie Options
+    maxAge: 31536000000//365 * 24 * 60 * 60 * 1000 // 24 hours
+  }))
 app.use(favicon(Settings.getPathFavicon()));
 
 app.use(bp.json())
