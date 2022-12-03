@@ -78,8 +78,8 @@ export function initVue(initData, components){
                 this.spiritList[index].intuition = Math.max(1,(1*force) + curDef.intuition);
                 this.spiritList[index].charisma = Math.max(1,(1*force) + curDef.charisma);
                 this.spiritList[index].magic = Math.max(1,1*force);
-                this.spiritList[index].phys_init = curDef.phys_init.replace("(Fx2)",(force*2) + "");
-                this.spiritList[index].astral_init = curDef.astral_init.replace("(Fx2)",(force*2) + "");
+                this.spiritList[index].phys_init = this.calcInitiative(curDef.phys_init,force);
+                this.spiritList[index].astral_init = this.calcInitiative(curDef.phys_init,force);
                 this.spiritList[index].condition_phys_max = Math.ceil((8+(this.spiritList[index].body/2)));
                 this.spiritList[index].condition_stun_max = Math.ceil((8+(this.spiritList[index].willpower/2)));
                 this.spiritList[index].condition_phys_cur = 0;
@@ -88,6 +88,21 @@ export function initVue(initData, components){
                 this.calcSkills(this.spiritList[index]);
                 this.calcPowers(this.spiritList[index]);
                 
+            },
+            calcInitiative(formula, force){
+                var res = formula.replace("(Fx2)",(force*2) + "").toUpperCase();
+                var numDice = "";
+                for(var i = 0; i < 10; i++){
+                    var cur = i + "D6";
+                    if(res.includes(cur)){
+                        numDice = cur;
+                        res = res.replace(cur, "0");
+                        break;
+                    }
+                }
+                res = eval(res);
+                res = res + "+" + cur;
+                return res;
             },
             calcSkills(spirit){
                 spirit.skills.splice(0, spirit.skills.length);
