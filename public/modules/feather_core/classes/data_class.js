@@ -63,12 +63,8 @@ class Data_Class{
         var data = this.getData();
         for(var key in data){
             if(key == "_modified" || key == "_created")continue;
-            var val = data[key];
-            //if(typeof(val) == "number" || typeof(val) == "boolean"){
-            //    cols.push(key + " = " + data[key] + " ");
-            //}else{
-                cols.push(" " + key + " = \"" + data[key] + "\"");
-            //}
+            if(key == "_id" && (data[key] == "null" || data[key] == null))continue;
+            cols.push(" " + key + " = \"" + data[key] + "\"");
         }
         var fullQuerry = '';
         if(data["_id"] != null){
