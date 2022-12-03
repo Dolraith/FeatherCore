@@ -65,12 +65,16 @@ class CIndex extends Controller {
     async saveType(){
         var sentType = this._request.body.type;
         var spiritType;
+        console.log(sentType);
         if(sentType._id != null){
-            spiritType = DataSpiritType.id(sentType._id);
+            spiritType = await DataSpiritType.id(sentType._id);
         }else{
-            spiritType = await DataSpiritType.make();
+            spiritType = DataSpiritType.make();
         }
+       // console.log(spiritType);
         spiritType.inflate(sentType);
+       // console.log(spiritType);
+       // console.log(sentType);
         var resultId = await spiritType.save();
         this.setView({message:"Saved!", success:true, _id:resultId});
     }

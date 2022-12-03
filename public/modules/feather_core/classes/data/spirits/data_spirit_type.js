@@ -2,7 +2,8 @@ Data_Class = require(global.classPaths.data_super);
 var SQL = require(global.classPaths.sql);
 
 async function id(id = 0, callback){
-    user = new Data_Spirit_Type().loadOne("_id = " + id);
+    user = new Data_Spirit_Type();
+    user.loadOne("_id = " + id);
     return user;
 }
 async function query(query){
@@ -44,7 +45,8 @@ class Data_Spirit_Type extends Data_Class{
             phys_init:"",
             astral_init:"",
             source:"",
-            special:""
+            special:"",
+            weakness:''
         })
     }
 }

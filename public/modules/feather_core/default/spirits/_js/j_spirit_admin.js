@@ -41,6 +41,7 @@ export function initVue(initData, components){
                     astral_init:"",
                     source:"",
                     special:"",
+                    weakness:''
                 });
             },
             addPower(){
@@ -106,6 +107,7 @@ export function initVue(initData, components){
                 this.spirit_skills.splice(index,1);
             },
             async saveType(index){
+                console.log(this.spirit_types[index]);
                 const request = new Request("spirit_admin/saveType",
                 {
                     method: "POST",
@@ -114,7 +116,7 @@ export function initVue(initData, components){
                     body: JSON.stringify({type:this.spirit_types[index]})
                 });
                 var data = await fetch(request).then((response) => response.json());
-                this.spirit_types[index]._id = data._id;
+                if(this.spirit_types[index]._id == null)this.spirit_types[index]._id = data._id;
                 console.log(data);
             },
             async savePower(index){

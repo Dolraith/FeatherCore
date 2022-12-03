@@ -2,7 +2,8 @@ Data_Class = require(global.classPaths.data_super);
 var SQL = require(global.classPaths.sql);
 
 async function id(id = 0, callback){
-    user = new Data_Spirit_Power().loadOne("_id = " + id);
+    user = new Data_Spirit_Power();
+    user.loadOne("_id = " + id);
     return user;
 }
 async function query(query){

@@ -23,10 +23,6 @@ class Data_Class{
     }
 
     set(property, value){
-        if(property == "_id"){
-            console.warn("You can't change _id of an object.");
-            return;
-        }
         if(this.data[property] === undefined){
             throw new Error("No property " + property +" in this data class.");
         }
@@ -65,7 +61,7 @@ class Data_Class{
         var cols = []
         var data = this.getData();
         for(var key in data){
-            if(key == "_id" || key == "_modified" || key == "_created")continue;
+            if(key == "_modified" || key == "_created")continue;
             var val = data[key];
             //if(typeof(val) == "number" || typeof(val) == "boolean"){
             //    cols.push(key + " = " + data[key] + " ");

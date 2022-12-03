@@ -3,12 +3,9 @@ import Counter from '/modules/feather_core/default/_vueComponents/counter.js';
 import Tooltip from '/modules/feather_core/default/_vueComponents/tooltip.js';
 export function initVue(initData, components){
     var vue = createApp({
-        el: "",
         components:{
-
         },
         data() {
-            console.log(initData.spirit_powers);
             var data = {
                 refreshKey:0,
                 spiritList:[],
@@ -112,6 +109,7 @@ export function initVue(initData, components){
                 this.spiritList[index].condition_phys_cur = 0;
                 this.spiritList[index].condition_stun_cur = 0;
                 this.spiritList[index].pool_modifier = 0;
+                this.spiritList[index].weakness = curDef.weakness;
                 this.calcSkills(this.spiritList[index]);
                 this.calcPowers(this.spiritList[index]);
                 
