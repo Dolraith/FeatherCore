@@ -17,7 +17,7 @@ class Data_Class{
 
     inflate(dictionary){
         for(var i in dictionary){
-            if(i == "_id" || i == "_created" || i == "_modified")continue;
+            if(i == "_created" || i == "_modified")continue;
             this.set(i, dictionary[i]);
         }
     }
@@ -81,6 +81,8 @@ class Data_Class{
         else{
             fullQuerry = "INSERT INTO " + this.table + " SET " + cols.join(',') + ";"
             var result = await SQL.save(fullQuerry);
+            console.log(result);
+            if(result == null)return null;
             this.data['_id'] = Number(result.insertId);
         } 
         return this.data["_id"];

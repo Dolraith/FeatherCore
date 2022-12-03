@@ -22,6 +22,7 @@ class CIndex extends Controller {
         var spirit_skills = await DataSpiritSkill.many_query(null,true);
 
         var spirit_skill_map = await SQL.load("SELECT * FROM spirit_map_types_skills")
+
         var skillmap = {active:null};
         var powermap = {active:null};
 
@@ -67,7 +68,7 @@ class CIndex extends Controller {
         if(sentType._id != null){
             spiritType = DataSpiritType.id(sentType._id);
         }else{
-            spiritType = DataSpiritType.make();
+            spiritType = await DataSpiritType.make();
         }
         spiritType.inflate(sentType);
         var resultId = await spiritType.save();
@@ -89,7 +90,7 @@ class CIndex extends Controller {
         var sentSkill = this._request.body.skill;
         var spiritSkill;
         if(sentSkill._id != null){
-            spiritSkill = DataSpiritSkill.id(sentSkill._id);
+            spiritSkill = await DataSpiritSkill.id(sentSkill._id);
         }else{
             spiritSkill = DataSpiritSkill.make();
         }

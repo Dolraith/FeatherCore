@@ -19,6 +19,7 @@ export function initVue(initData, components){
             for(i in initData){
                 data[i] = initData[i];
             }
+            console.log(data);
             return data;
         },
         methods:{
@@ -39,8 +40,8 @@ export function initVue(initData, components){
                     phys_init:"",
                     astral_init:"",
                     source:"",
-                    special:""
-                })
+                    special:"",
+                });
             },
             addPower(){
                 this.spirit_powers.push({
@@ -200,4 +201,5 @@ export function initVue(initData, components){
         vue.component(i, components[i]);
     }
     vue.mount('#vuemain');
+    window.vue = vue;
 }

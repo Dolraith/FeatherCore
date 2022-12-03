@@ -19,7 +19,7 @@
 
 <div class="tab-content" id="myTabContent">
     <!------------------------Types Tab------------------------>
-    <div v-bind:class="(tab=='types')?'tab-pane fade show active':'tab-pane fade'" class="panel">
+    <div v-bind:class="(tab=='types')?'tab-pane fade show active':'tab-pane fade'" class="panel" v-if="tab==='types'">
         <button class="btn btn-primary" v-on:click="addType()">Add Type</button>
         <div class="card" v-for="(spirit_type, spirit_type_index) in spirit_types">
             <div class="card-body container">
@@ -105,7 +105,7 @@
 
 
     <!------------------------Powers Tab------------------------>
-    <div v-bind:class="(tab=='powers')?'tab-pane fade show active':'tab-pane fade'"  class="panel">
+    <div v-bind:class="(tab=='powers')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='powers'">
         <button class="btn btn-primary" v-on:click="addPower()">Add Power</button>
         <div class="card" v-for="(spirit_power, spirit_power_index) in spirit_powers">
             <div class="card-body container">
@@ -151,7 +151,7 @@
         </div>
     </div>
     <!------------------------Skills Tab------------------------>
-    <div v-bind:class="(tab=='skills')?'tab-pane fade show active':'tab-pane fade'"  class="panel">
+    <div v-bind:class="(tab=='skills')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='skills'">
         <button class="btn btn-primary" v-on:click="addSkill()">Add Skill</button>
         <div class="card" v-for="(spirit_skill, spirit_skill_index) in spirit_skills">
             <div class="card-body container">
@@ -175,12 +175,12 @@
         </div>
     </div>
     <!------------------------Power-Map Tab------------------------>
-    <div v-bind:class="(tab=='power-map')?'tab-pane fade show active':'tab-pane fade'"  class="panel">
+    <div v-bind:class="(tab=='power-map')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='power-map'">
         <div class="container">
             <div class="row">
                 <div class="col-2">
                     <ul class="nav flex-column border-right">
-                        <button class="btn btn-primary btn-sm" v-bind:disabled="!(powermap.active !=null && powermap[powermap.active].changed===true)" v-on:click="map_power_save()">Save</button>
+                        <button class="btn btn-primary btn-sm" v-bind:disabled="!(powermap.active != null && powermap[powermap.active].changed===true)" v-on:click="map_power_save()">Save</button>
                         <li class="nav-item" v-for="spirit_type in spirit_types">
                             <a v-if="powermap.active!=spirit_type._id" href='#' class="nav-link" v-on:click="powermap.active=spirit_type._id">{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</a>
                             <div v-if="powermap.active==spirit_type._id" class="nav-link bg-secondary" disabled>{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</div>
@@ -225,7 +225,7 @@
         </div>
     </div>
     <!------------------------Skill Map Tab------------------------>
-    <div v-bind:class="(tab=='skill-map')?'tab-pane fade show active':'tab-pane fade'"  class="panel">
+    <div v-bind:class="(tab=='skill-map')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='skill-map'">
         <div class="container">
             <div class="row">
                 <div class="col-2">

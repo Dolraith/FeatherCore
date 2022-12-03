@@ -31,6 +31,7 @@ async function save(query){
         var rows = await conn.query(query,{insertIdAsNumber: true});
         delete rows.meta;
     } catch (err) {
+        console.log(err);
         throw err;
     } finally {
         if (conn) conn.end();
