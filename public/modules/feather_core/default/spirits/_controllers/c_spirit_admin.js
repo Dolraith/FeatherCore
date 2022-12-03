@@ -10,15 +10,13 @@ class CIndex extends Controller {
     async index(){
         var bob = await(Data_User.id(2))
         var id = this.checkLogin();
-        if(id === false && false){
+        if(id === false){
             this.setRedirect("/err/err403");
             return;
         }
         this.setView('modules/feather_core/default/spirits/_views/v_spirit_admin');
-        //user = await Data_User.id(id);
-
-
-        
+        user = await Data_User.id(id);
+                
         var spirit_types = await DataSpiritType.many_query(null,true);
         var spirit_powers = await DataSpiritPower.many_query(null,true);
         var spirit_skills = await DataSpiritSkill.many_query(null,true);

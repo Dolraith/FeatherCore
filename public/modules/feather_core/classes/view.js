@@ -4,7 +4,9 @@ class view {
         this.dependencies = {
             js:[],
             css:[],
-            named:[]
+            named:[],
+            modules:[],
+            components:[]
         }
         this._data = viewData;
         this._vueData = {}
@@ -21,8 +23,10 @@ class view {
             compiled_template+=Utility.getChunk(this.template);
         }
         var footer = Utility.getChunk(this.footer);
-        footer = footer.replace("<?data_marker?>", JSON.stringify(this._vueData));
+        footer = footer.replaceAll("<?data_marker?>", JSON.stringify(this._vueData) + "," + this.wrapComponents());
+        footer = footer.replaceAll("<?template_marker?>", this.getTemplates());
         compiled_template+=footer;
+
         return compiled_template;
     }
 
@@ -52,7 +56,7 @@ class view {
         for(var i of this.dependencies.named){
             result += global._dependency_dictionary.getDependencyInclude(i, spacer);
         }
-        result += '<!-- free-floating css -->\n';
+        result += spacer + '<!-- free-floating css -->\n';
         for(var i of this.dependencies.css){
             result += "<link rel=\"stylesheet\" href=\"" + i + "\">\n";
         }
@@ -60,11 +64,38 @@ class view {
         for(var i of this.dependencies.js){
             result += spacer + "<script src=\"" + i + "\"></script>\n";
         }
+        result += spacer + "<!-- module scripts -->\n";
+        for(var i of this.dependencies.modules){
+            result += spacer + "<script type='module'>\n";
+            result += spacer + "    import * as " + i.name + " from '" + i.path + "';\n";
+            result += spacer + "    window._" + i.name + " = " + i.name+";\n";
+            result += spacer + "</script>\n";
+        }
+        result += spacer + "<!-- components scripts -->\n";
+        for(var i of this.dependencies.components){
+            var component = global._dependency_dictionary.getComponent(i);
+            result += spacer + "<script type='module'>\n";
+            result += spacer + "    import * as " + component.name + " from '" + component.js + "';\n";
+            result += spacer + "    window._" + component.name + " = " + component.name+";\n";
+            result += spacer + "</script>\n";
+        }
         //<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         //<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
 
         //do this with brain
+        return result;
+    }
+
+    getTemplates(){
+        var result = "";
+
+        for(var template of this.dependencies.components){
+            var path = global._dependency_dictionary.getComponentTemplate(template);
+            result += "\n<!------>\n";
+            result += Utility.getChunk(path);
+
+        }
         return result;
     }
 
@@ -83,7 +114,12 @@ class view {
     addDependencyPackage(name){
         this.dependencies.named.push(name);
     }
-    
+
+
+    addComponent(name){
+        this.dependencies.components.push(name);
+    }
+
     addDependencyFiles(array, type){
         if(this.dependencies[type] === undefined){
             this.dependencies[type] = array;
@@ -92,6 +128,14 @@ class view {
         }
     }
 
+    wrapComponents(){
+        var result = [];
+        for(var i of this.dependencies.components){
+            result.push("\"" + i + "\"");
+        }
+        result = "[" + result.join(',') + "]";
+        return result;
+    }
 }
 
 module.exports = view;

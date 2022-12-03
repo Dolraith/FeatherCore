@@ -1,8 +1,12 @@
-var vue;
-function initVue(initData){
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import Counter from '/modules/feather_core/default/_vueComponents/counter.js';
+import Tooltip from '/modules/feather_core/default/_vueComponents/tooltip.js';
+export function initVue(initData, components){
+    var vue = createApp({
+        el: "",
+        components:{
 
-    vue = new Vue({
-        el: "#vuemain",
+        },
         data() {
             var data = {
                 refreshKey:0,
@@ -16,7 +20,7 @@ function initVue(initData){
                 powerTooltip:{
                     power:JSON.parse(JSON.stringify(initData.spirit_powers[0])),
                     show:false
-                }
+                },
             };
             for(i in initData){
                 data[i] = initData[i];
@@ -125,7 +129,9 @@ function initVue(initData){
             pickPowers(spirit, spiritIndex){
                 this.optionalPowers.options.splice(0, Infinity);
                 for(var i in spirit.powers.optional){
-                    this.optionalPowers.options.push(spirit.powers.optional[i]);
+                    var option = spirit.powers.optional[i];
+                    option.showDescription = false;
+                    this.optionalPowers.options.push(option);
                 }
                 this.optionalPowers.picked.splice(0, Infinity);
                 console.log(spirit.powers.picked.length);
@@ -134,6 +140,9 @@ function initVue(initData){
                 }
                 this.optionalPowers.activeSpirit = spiritIndex;
                 this.optionalPowers.numOptional = spirit.powers.numOptional;
+            },
+            showModalPowerDescription(option, vis){
+                option.showDescription = vis;
             },
             pickPowersOk(){
                 var i = this.optionalPowers.activeSpirit;
@@ -148,11 +157,10 @@ function initVue(initData){
                     
                 }
             },
-            powerTooltipToggle(power, show){
-                for(i in power){
+            setPowerTooltip(power){
+                for(var i in power){
                     this.powerTooltip.power[i] = power[i];
                 }
-                this.powerTooltip.show = show;
             },
             damage(spiritIndex, healInstead){
                 var curDamage = this.spiritList[spiritIndex].cur_dmg_val;
@@ -211,7 +219,7 @@ function initVue(initData){
                 console.log(this.spiritList[spiritIndex].skillDetails);
             },
             condenseSkills(spirit){
-                result = [];
+                var result = [];
                 for(var i in spirit.skills){
                     result.push(spirit.skills[i].name);
                 }
@@ -228,5 +236,10 @@ function initVue(initData){
                 return spirits;
             }
         }
-    })
+    });
+
+    for(var comp of components){
+        vue.component(comp, eval(comp));
+    }
+    vue.mount("#vuemain");
 }

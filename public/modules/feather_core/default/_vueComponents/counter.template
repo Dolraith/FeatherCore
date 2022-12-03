@@ -1,0 +1,6 @@
+<template text/x-template id="Counter">
+    <div>
+        <p>{{ count }}</p>
+        <button v-on:click="increment(count)">Increment</button>
+    </div>
+</template>

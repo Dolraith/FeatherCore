@@ -39,15 +39,12 @@ class CIndex extends Controller {
             powermap[type][power] = required;
         }
 
-        //this.setViewData("user",user.getData());
         this.setViewData("skillmap",skillmap);
         this.setViewData("powermap",powermap);
         this.setViewData("spirit_types",spirit_types);
         this.setViewData("spirit_powers",spirit_powers);
         this.setViewData("spirit_skills",spirit_skills);
 
-        //console.log(this._viewData);
-        //console.log(bob)
         this.setView('modules/feather_core/default/spirits/_views/v_spirits');
     }
 };

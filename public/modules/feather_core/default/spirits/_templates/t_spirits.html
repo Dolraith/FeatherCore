@@ -2,7 +2,6 @@
 
 <div class="control-group">
     <h3>Spirits   <button class="btn btn-primary" v-on:click="addSpirit">Add Spirit</button></h3>
-    
 </div>
 <hr>
 <div v-for="(spirit,spiritIndex) in spiritList">
@@ -11,19 +10,19 @@
             <div class='row form'>
                 <div class="col-sm">
                     <label class="font-weight-bold">Type</label>
-                    <select v-model:value="spirit.type" class="form-control" v-on:change="forceTypeEleCompliance(spiritIndex)">
+                    <select v-model="spirit.type" class="form-control" v-on:change="forceTypeEleCompliance(spiritIndex)">
                         <option v-for="type in types">{{type}}</option>
                     </select>
                 </div>
                 <div class="col-sm">
                     <label class="font-weight-bold">Element</label>
-                    <select v-model:value="spirit.element" class="form-control" v-on:change="calcSpirit(spiritIndex)">
+                    <select v-model="spirit.element" class="form-control" v-on:change="calcSpirit(spiritIndex)">
                         <option v-for="element in elements[spirit.type]">{{element}}</option>
                     </select>
                 </div>
                 <div class="col-sm">
                     <label class="font-weight-bold">Force</label>
-                    <select v-model:value="spirit.force" class="form-control" v-on:change="calcSpirit(spiritIndex)">
+                    <select v-model="spirit.force" class="form-control" v-on:change="calcSpirit(spiritIndex)">
                         <option v-for="i in 20">{{i}}</option>
                     </select>
                 </div>
@@ -111,10 +110,10 @@
             <!---Powers-->
             <div class="row">
                 <div><b>Powers</b></div>
-                <div>Required: <span class="badge badge-secondary" v-for="power in spirit.powers.required" @mouseover="powerTooltipToggle(power,true)" @mouseleave="powerTooltipToggle(power,false)">{{power.name}}  <i class="bi bi-question-circle"></i></span></div>       
+                <div>Required: <span class="badge badge-secondary" v-for="power in spirit.powers.required" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{power.name}} <i class="bi bi-question-circle"></i></span></div>       
                 <div>Optional: <div v-if='spirit.powers.picked.length > spirit.powers.numOptional' class="margin-left: 15px; badge badge-danger">!Too Many Powers!</div> 
                     <button v-on:click="pickPowers(spirit, spiritIndex)" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#powerPickModal"><i class="bbi bi-wrench"></i></button>
-                    <span style="margin-right: 5px;" class="badge badge-secondary" v-for="power in spirit.powers.picked" @mouseover="powerTooltipToggle(power,true)" @mouseleave="powerTooltipToggle(power,false)">{{power.name}} <i class="bi bi-question-circle"></i></span>
+                    <span style="margin-right: 5px;" class="badge badge-secondary" v-for="power in spirit.powers.picked" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{power.name}} <i class="bi bi-question-circle"></i></span>
                 </div>
             </div>
         </div>
@@ -126,7 +125,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Pick Powers<div v-bind:class="(optionalPowers.picked.length>optionalPowers.numOptional)?'badge badge-danger':'badge badge-success'">{{optionalPowers.picked.length}}/{{optionalPowers.numOptional}}</div></h5>
+          <h5 class="modal-title">Pick Powers  <div v-bind:class="(optionalPowers.picked.length>optionalPowers.numOptional)?'badge badge-danger':'badge badge-success'">{{optionalPowers.picked.length}}/{{optionalPowers.numOptional}}</div></h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -145,7 +144,13 @@
                     </label>
                 </td>
                 <td>{{option.name}}</td>
-                <td><i class="bi bi-question-circle"></i></td>
+                <td>
+                    <button class='btn btn-secondary'  v-if="option.showDescription == false" v-on:click="showModalPowerDescription(option,true)">Show Description</button>
+                    <div v-if="option.showDescription == true">
+                        <button class='btn btn-secondary' v-on:click="showModalPowerDescription(option,false)"> Hide Description</button><br>
+                        {{option.descript}}
+                    </div>
+                </td>
             </tr>
           </table>
         </div>
@@ -156,8 +161,41 @@
     </div>
 </div>
 
-<transition name="bounce">
-    <div class="info modal fade" v-if="powerTooltip.show == true">
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+
+<div class="modal fade" id="powerExplanation" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{powerTooltip.power.name}}</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm">
+                    <b>Name:</b> {{powerTooltip.power.name}}<br>
+                    <b>Range:</b> {{powerTooltip.power.power_range}} 
+                </div>
+                <div class="col-sm">
+                    <b>Type:</b> {{powerTooltip.power.type}}<br>
+                    <b>Action:</b> {{powerTooltip.power.action}}
+                </div>
+                <div class="col-sm">
+                    <b>Duration:</b> {{powerTooltip.power.duration}}<br>
+                    <b>Source:</b> {{powerTooltip.power.source}}
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg">
+                    {{powerTooltip.power.descript}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" v-on:click="pickPowersOk()">OK</button>
+        </div>
+      </div>
     </div>
-</transition>
+</div>  

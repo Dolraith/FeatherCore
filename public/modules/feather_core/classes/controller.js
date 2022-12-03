@@ -35,8 +35,6 @@ class Controller{
             await this[action]();
             this.viewComposit();
         }else{
-            //if(this._request.headers)
-            console.log(this._request.headers);
             this.sendError("Unknown action: " + action, false);
         }        
     }
@@ -66,7 +64,6 @@ class Controller{
 
     login(_id){
         this._request.session.user_id = _id;
-        this._request.session.save();
     }
 
     checkLogin(){

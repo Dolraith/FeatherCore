@@ -4,7 +4,7 @@ class v_login extends View{
         super();
         this.addDependency('bootstrap');
         this.addDependency('vue');
-        this.addDependency(['modules/feather_core/default/users/_js/j_login.js'],'js')
+        this.addDependency([{name:'vue',path:'/modules/feather_core/default/users/_js/j_login.js'}],'modules');
         this.setTemplate('modules/feather_core/default/users/_templates/t_login.html');
     }    
 }

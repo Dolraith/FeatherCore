@@ -3,7 +3,7 @@ class v_index extends View{
     constructor(data){        
         super(data);
         this.addDependency('bootstrap');
-        this.addDependency(['modules/feather_core/default/spirits/_js/j_spirit_admin.js'],'js');
+        this.addDependency([{name:'vue',path:'/modules/feather_core/default/spirits/_js/j_spirit_admin.js'}],'modules');
         this.addDependency('vue');
         this.setTemplate('modules/feather_core/default/spirits/_templates/t_spirit_admin.html');
         user = this.getDataProp("user");

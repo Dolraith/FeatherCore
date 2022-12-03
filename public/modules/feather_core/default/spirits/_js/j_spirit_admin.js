@@ -1,9 +1,8 @@
-function initVue(initData){
-    console.log("hello initializing");
-    new Vue({
-        el: "#vuemain",
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+export function initVue(initData, components){    
+    var vue = createApp({
         data(){
-            data = {
+            var data = {
                 tab:'types',
                 attributes:[
                     "Body",
@@ -143,17 +142,17 @@ function initVue(initData){
             },
             checkForNulls(){
                 var alertText = null;
-                for(type in this.spirit_types){
+                for(var type in this.spirit_types){
                     if(this.spirit_types[type]._id == null){
                         alertText = "There's null ids in types, save your stuff first.";
                     }
                 }
-                for(skill in this.spirit_skills){
+                for(var skill in this.spirit_skills){
                     if(this.spirit_skills[skill]._id == null){
                         alertText = "There's null ids in skills, save your stuff first.";
                     }
                 }
-                for(power in this.spirit_powers){
+                for(var power in this.spirit_powers){
                     if(this.spirit_powers[power]._id == null){
                         alertText = "There's null ids in powers, save your stuff first.";
                     }
@@ -197,4 +196,8 @@ function initVue(initData){
             }
         }
     });
+    for(var i in components){
+        vue.component(i, components[i]);
+    }
+    vue.mount('#vuemain');
 }

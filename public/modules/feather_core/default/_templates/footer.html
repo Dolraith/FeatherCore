@@ -2,5 +2,13 @@
             </div>
         </div>
     </body>
-    <script>if (typeof initVue == 'function'){initVue(<?data_marker?>)}</script>
+    <script>
+        window.onload = function (){
+            if(typeof window._vue.initVue == 'function'){
+                window._vue.initVue(<?data_marker?>);
+            }
+        }
+    </script>
+
+    <?template_marker?>
 </html>

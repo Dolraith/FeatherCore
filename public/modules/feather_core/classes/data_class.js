@@ -43,9 +43,7 @@ class Data_Class{
         new SQL(this.query + " from " + this.table, this.loaded)        
     }
 
-    loaded(){
-        //console.log(this.data)
-    }
+    loaded(){}
 
     async loadOne(query){
         var fullQuerry = "select * from " + this.table + " where " + query + " limit 1"

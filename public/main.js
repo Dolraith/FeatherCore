@@ -26,7 +26,7 @@ const favicon = require("serve-favicon");
 const app = express();
 const port = 80;
 
-const static_extentions = ["js","css","scss","png","jpg"];
+const static_extentions = ["jpg","js","css","scss","png","vue"];
 
 global._router = router.getInstance();
 global.settings = Settings;

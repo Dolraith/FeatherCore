@@ -3,8 +3,9 @@ class v_index extends View{
     constructor(data){        
         super(data);
         this.addDependency('bootstrap');
-        this.addDependency(['modules/feather_core/default/spirits/_js/j_spirits.js'],'js');
+        this.addDependency([{name:'vue',path:'/modules/feather_core/default/spirits/_js/j_spirits.js'}],'modules');
         this.addDependency('vue');
+        this.addComponent('Counter');
         this.setTemplate('modules/feather_core/default/spirits/_templates/t_spirits.html');
 
         this.setVueData("skillmap",this.getDataProp("skillmap"));

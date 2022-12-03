@@ -28,12 +28,8 @@ async function save(query){
     var rows = null;
     try {
         conn = await global.mysql.pool.getConnection();
-        console.log(query);
         var rows = await conn.query(query,{insertIdAsNumber: true});
         delete rows.meta;
-        
-        console.log(rows);
-
     } catch (err) {
         throw err;
     } finally {
