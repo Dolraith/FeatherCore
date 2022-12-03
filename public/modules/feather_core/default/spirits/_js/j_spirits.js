@@ -8,6 +8,7 @@ export function initVue(initData, components){
 
         },
         data() {
+            console.log(initData.spirit_powers);
             var data = {
                 refreshKey:0,
                 spiritList:[],
@@ -18,9 +19,9 @@ export function initVue(initData, components){
                     numOptional:0
                 },
                 powerTooltip:{
-                    power:JSON.parse(JSON.stringify(initData.spirit_powers[0])),
-                    show:false
-                },
+                    show:false,
+                    power:JSON.parse(JSON.stringify(initData.spirit_powers[0]))   
+                }
             };
             for(i in initData){
                 data[i] = initData[i];
@@ -45,6 +46,32 @@ export function initVue(initData, components){
             data['types'] = types;
             data['elements'] = elements;
             data['typeIndexes'] = typeIndexes;
+            data['traditions'] = {
+                active:0,
+                list:[
+                    {name:'The Hermetic Mage',combat:'Fire',detection:'Air',health:'Man',illusion:'Water',manipulation:'Earth',drain:'Logic + Willpower',source:'Core'},
+                    {name:'The Shaman',combat:'Beasts',detection:'Water',health:'Earth',illusion:'Air',manipulation:'Man',drain:'Charisma + Willpower',source:'Core'},
+                    {name:'Aztec',combat:'Guardian',detection:'Fire',health:'Plant',illusion:'Water',manipulation:'Beasts',drain:'Charisma + Willpower',source:'Street Grimoire'},
+                    {name:'Black Magic',combat:'Fire',detection:'Water',health:'Earth',illusion:'Air',manipulation:'Man',drain:'Charisma + Willpower',source:'Street Grimoire'},
+                    {name:'Buddhism',combat:'Air',detection:'Guidance',health:'Earth',illusion:'Fire',manipulation:'Water',drain:'Intuition + Willpower',source:'Street Grimoire'},
+                    {name:'Chaos Magic',combat:'Fire',detection:'Air',health:'Earth',illusion:'Man',manipulation:'Water',drain:'Intuition + Willpower',source:'Street Grimoire'},
+                    {name:'Christian Theurgy',combat:'Fire',detection:'Water',health:'Air',illusion:'Earth',manipulation:'Guidance',drain:'Charisma + Willpower',source:'Street Grimoire'},
+                    {name:'Druid',combat:'Beasts',detection:'Water',health:'Plant',illusion:'Air',manipulation:'Earth',drain:'Intuition + Willpower',source:'Street Grimoire'},
+                    {name:'Egyptian',combat:'Fire',detection:'Earth',health:'Air',illusion:'Guidance',manipulation:'Water',drain:'Intuition + Willpower',source:'Shadow Spells'},
+                    {name:'Hinduism',combat:'Beasts',detection:'Water',health:'Plant',illusion:'Air',manipulation:'Earth',drain:'Logic + Willpower',source:'Street Grimoire'},
+                    {name:'Islam',combat:'Guardian',detection:'Earth',health:'Plant',illusion:'Air',manipulation:'Fire',drain:'Logic + Willpower',source:'Street Grimoire'},
+                    {name:'Path Of The Wheel',combat:'Earth',detection:'Guidance',health:'Air',illusion:'Water',manipulation:'Fire',drain:'Charisma + Willpower',source:'Street Grimoire'},
+                    {name:'Qabbalism',combat:'Air',detection:'Earth',health:'Fire',illusion:'Water',manipulation:'Task',drain:'Logic + Willpower',source:'Street Grimoire'},
+                    {name:'Shinto',combat:'Air',detection:'Water',health:'Plant',illusion:'Beasts',manipulation:'Man',drain:'Charisma + Willpower',source:'Street Grimoire'},
+                    {name:'Sioux',combat:'Beasts',detection:'Plant',health:'Fire',illusion:'Air',manipulation:'Guardian',drain:'Intuition + Willpower',source:'Street Grimoire'},
+                    {name:'Vodou',combat:'Guardian',detection:'Water',health:'Man',illusion:'Guidance',manipulation:'Task',drain:'Charisma + Willpower',source:'Street Grimoire'},
+                    {name:'Wicca - Goddess',combat:'Fire',detection:'Water',health:'Plant',illusion:'Air',manipulation:'Earth',drain:'Intuition  + Willpower',source:'Street Grimoire'},
+                    {name:'Wicca - Gardnerian',combat:'Fire',detection:'Water',health:'Plant',illusion:'Air',manipulation:'Earth',drain:'Logic + Willpower',source:'Street Grimoire'},
+                    {name:'Wuxing',combat:'Fire',detection:'Earth',health:'Plant',illusion:'Water',manipulation:'Guidance',drain:'Logic + Willpower',source:'Street Grimoire'},
+                    {name:'Zoroastrianism',combat:'Man',detection:'Water',health:'Fire',illusion:'Air',manipulation:'Plant',drain:'Logic + Willpower',source:'Street Grimoire'},
+                    {name:'Insect Spirits',combat:'Soldier',detection:'Scout',health:'Caretaker',illusion:'Nymph',manipulation:'Worker',drain:'Intuition + Willpower',source:'Street Grimoire'}
+                ]
+            }
             return data;    
         },
         methods: {

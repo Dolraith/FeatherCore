@@ -1,7 +1,7 @@
 
 
 <div class="control-group">
-    <h3>Spirits   <button class="btn btn-primary" v-on:click="addSpirit">Add Spirit</button></h3>
+    <h3>Spirits   <button class="btn btn-primary" v-on:click="addSpirit">Add Spirit</button>  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#traditionLookup">Tradition Lookup</button></h3>
 </div>
 <hr>
 <div v-for="(spirit,spiritIndex) in spiritList">
@@ -161,6 +161,42 @@
     </div>
 </div>
 
+<div class="modal fade" id="traditionLookup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tradition Lookup</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg">
+                    <select v-model="traditions.active" class="form-control">
+                        <option v-for="(tradition, traditionIndex) in traditions.list" v-bind:value="traditionIndex">{{tradition.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Function</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(value,key) in traditions.list[traditions.active]">
+                        <td>{{key[0].toUpperCase() + key.slice(1)}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+</div>  
 
 <div class="modal fade" id="powerExplanation" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
