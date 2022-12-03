@@ -18,6 +18,7 @@ class Data_Class{
     inflate(dictionary){
         for(var i in dictionary){
             if(i == "_created" || i == "_modified")continue;
+            if(i == "_id" && dictionary[i] == "null")continue;
             this.set(i, dictionary[i]);
         }
     }
