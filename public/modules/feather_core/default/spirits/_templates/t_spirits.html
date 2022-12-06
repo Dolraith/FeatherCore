@@ -112,8 +112,8 @@
             <div class="row">
                 <div><b>Powers</b></div>
                 <div>Required: <span class="badge badge-secondary" v-for="power in spirit.powers.required" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{power.name}} <i class="bi bi-question-circle"></i></span></div>       
-                <div>Optional: <div v-if='spirit.powers.picked.length > spirit.powers.numOptional' class="margin-left: 15px; badge badge-danger">!Too Many Powers!</div> 
-                    <button v-on:click="pickPowers(spirit, spiritIndex)" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#powerPickModal"><i class="bbi bi-wrench"></i></button>
+                <div>Optional: <div v-if='spirit.powers.picked.length > spirit.powers.numOptional' class="margin-left: 15px; badge badge-danger">!Too Many Powers!</div>  <div v-if='spirit.powers.picked.length <>> spirit.powers.numOptional' class="margin-left: 15px; badge badge-warning">!Not Enough Powers!</div> 
+                    <button style="margin-right: 5px;" v-on:click="pickPowers(spirit, spiritIndex)" class="badge badge-primary" data-bs-toggle="modal" data-bs-target="#powerPickModal"><i class="bbi bi-wrench"></i></button>
                     <span style="margin-right: 5px;" class="badge badge-secondary" v-for="power in spirit.powers.picked" v-on:click='setPowerTooltip(power)' data-bs-toggle='modal' data-bs-target='#powerExplanation'>{{power.name}} <i class="bi bi-question-circle"></i></span>
                 </div>
             </div>
