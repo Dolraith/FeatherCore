@@ -110,6 +110,7 @@ export function initVue(initData, components){
                 this.spiritList[index].condition_stun_cur = 0;
                 this.spiritList[index].pool_modifier = 0;
                 this.spiritList[index].weakness = curDef.weakness;
+                this.spiritList[index].special = curDef.special;
                 this.calcSkills(this.spiritList[index]);
                 this.calcPowers(this.spiritList[index]);
                 
