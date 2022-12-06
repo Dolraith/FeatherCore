@@ -147,6 +147,7 @@ function safify(url) {
     }catch(ex){
         console.log("Ecountered exception.");
         console.log(ex);
+        console.log("URL in question: " + url);
         return "/";
     }
     //TODO: safify the url    
