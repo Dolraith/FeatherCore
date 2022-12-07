@@ -17,6 +17,8 @@ const bp = require('body-parser');
 const fs = require('fs');
 const glob = require("glob");
 const path = require('path');
+const https = require('https');
+const http = require('http');
 const router = require("./modules/feather_core/classes/router");
 const staticServer = require('node-static');
 const dependency_dictionary = require('./modules/feather_core/classes/dependency_dictionary');
@@ -24,7 +26,8 @@ const Settings = require("./settings.js");
 const favicon = require("serve-favicon");
 //--------
 const app = express();
-const port = 80;
+const portU = 80;
+const portS = 443;
 
 const static_extentions = ["jpg","js","css","scss","png","vue"];
 
@@ -91,8 +94,6 @@ app.all("/*", (req, res) => {
         }        
     }
     else{
-//        global._response = res;
-//        global._query = res.query;
         var globroot = __dirname.replaceAll('\\','/') + "/**/";
         //Set up dependencies
         //module dependencies
@@ -135,9 +136,27 @@ app.all("/*", (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Feather Core Listening at http://localhost:${port}`);
+//app.listen(port, () => {
+//    console.log(`Feather Core Listening at http://localhost:${port}`);
+//});
+
+const httpServer = http.createServer(app);
+httpServer.listen(portU, () => {
+    console.log("Feather core listening http at " + portU + ".");
 });
+
+if(fs.existsSync('/etc/letsencrypt/live/www.dolraith.com/privkey.pem')){
+    const httpsServer = https.createServer({
+        key: fs.readFileSync('/etc/letsencrypt/live/www.dolraith.com/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/www.dolraith.com/fullchain.pem')
+    }, app);
+    
+    
+    httpsServer.listen(portS, () => {
+        console.log("Feather core listening http at " + portS + ".");
+    });
+}
+
 
 function safify(url) {
     try{

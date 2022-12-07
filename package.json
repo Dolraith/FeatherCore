@@ -18,6 +18,8 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "glob": "^8.0.3",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
     "mariadb": "^3.0.2",
     "node-static": "^0.7.11",
     "serve-favicon": "^2.5.0",
