@@ -62,7 +62,14 @@ class CIndex extends Controller {
 
 
     async removeType(){this.setView({message:"Please Implement Me"});}
-    async removePower(){this.setView({message:"Please Implement Me"});}
+    async removePower(){
+        var id = this._request.body.power._id;
+
+        var query = "DELETE FROM spirit_power WHERE _id = " + id;
+
+        var rows = await SQL.save(query);
+        this.setView({success:true, message:"Affected rows: " + rows.affectedRows});
+    }
     async removeSkill(){this.setView({message:"Please Implement Me"});}
     async saveType(){
         var sentType = this._request.body.type;

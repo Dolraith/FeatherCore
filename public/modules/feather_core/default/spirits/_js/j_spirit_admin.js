@@ -85,7 +85,7 @@ export function initVue(initData, components){
                         method: "POST",
                         headers: new Headers({'content-type': 'application/json'}),
                         cache: "default",
-                        body: JSON.stringify({power:this.spirit_power[index]})
+                        body: JSON.stringify({power:this.spirit_powers[index]})
                     });
                     var data = await fetch(request).then((response) => response.json());
                     console.log(data);

@@ -29,7 +29,7 @@ async function save(query){
     var rows = null;
     try {
         conn = await global.mysql.pool.getConnection();
-        var rows = await conn.query(query,{insertIdAsNumber: true});
+        var rows = await conn.query(query,{ supportBigNumbers: true, insertIdAsNumber: true});
         delete rows.meta;
     } catch (err) {
         console.log(err);

@@ -21,7 +21,7 @@
     <!------------------------Types Tab------------------------>
     <div v-bind:class="(tab=='types')?'tab-pane fade show active':'tab-pane fade'" class="panel" v-if="tab==='types'">
         <button class="btn btn-primary" v-on:click="addType()">Add Type</button>
-        <div class="card" v-for="(spirit_type, spirit_type_index) in spirit_types">
+        <div class="card my-1" v-for="(spirit_type, spirit_type_index) in spirit_types">
             <div class="card-body container">
                 <div class='row form'>
                     <div class="col-sm">
@@ -111,7 +111,7 @@
     <!------------------------Powers Tab------------------------>
     <div v-bind:class="(tab=='powers')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='powers'">
         <button class="btn btn-primary" v-on:click="addPower()">Add Power</button>
-        <div class="card" v-for="(spirit_power, spirit_power_index) in spirit_powers">
+        <div class="card my-1" v-for="(spirit_power, spirit_power_index) in spirit_powers">
             <div class="card-body container">
                 <div class="row">
                     <div class="col-sm">
@@ -157,7 +157,7 @@
     <!------------------------Skills Tab------------------------>
     <div v-bind:class="(tab=='skills')?'tab-pane fade show active':'tab-pane fade'"  class="panel" v-if="tab==='skills'">
         <button class="btn btn-primary" v-on:click="addSkill()">Add Skill</button>
-        <div class="card" v-for="(spirit_skill, spirit_skill_index) in spirit_skills">
+        <div class="card my-1" v-for="(spirit_skill, spirit_skill_index) in spirit_skills">
             <div class="card-body container">
                 <div class="row">
                     <div class="col-sm">
