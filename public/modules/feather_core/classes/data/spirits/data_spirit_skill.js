@@ -16,11 +16,12 @@ function make(){
 function many_ids([]){}
 async function many_query(query=null, dataOnly=false){
     if(dataOnly){
-        var curquery = "SELECT * FROM spirit_skill";
+        var curQuery = "SELECT * FROM spirit_skill";
         if(query != null){
-            curquery += "WHERE " + query;
+            curQuery += "WHERE " + query;
         }
-        var rows = await SQL.load(curquery,function(){});
+        curQuery += " Order By name";
+        var rows = await SQL.load(curQuery,function(){});
         return rows;
     }else{
         throw new Error("Implement This.");
