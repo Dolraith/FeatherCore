@@ -141,7 +141,7 @@ app.listen(port, () => {
 
 function safify(url) {
     try{
-        if (url[0] === '.') url=url.splice(1);
+        //if (url[0] === '.') url=url.substring(1);
         if (url === "")return "/";
         return url
     }catch(ex){

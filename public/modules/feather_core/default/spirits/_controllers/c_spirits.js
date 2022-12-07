@@ -36,7 +36,9 @@ class CIndex extends Controller {
             var type = cur["spirit_types_id"];
             var power = cur["spirit_powers_id"];
             var required = cur['required'];
-            powermap[type][power] = required;
+            var notes = cur['notes'];
+            if(notes == undefined)notes = '';
+            powermap[type][power] = {required:required,notes:notes};
         }
 
         this.setViewData("skillmap",skillmap);

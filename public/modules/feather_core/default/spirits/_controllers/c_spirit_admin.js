@@ -47,7 +47,9 @@ class CIndex extends Controller {
             var type = cur["spirit_types_id"];
             var power = cur["spirit_powers_id"];
             var required = cur['required'];
-            powermap[type][power] = required;
+            var notes = cur['notes'];
+            if(notes == undefined)notes = '';
+            powermap[type][power] = {required:required,notes:notes};
         }
 
         //this.setViewData("user",user.getData());
@@ -121,15 +123,16 @@ class CIndex extends Controller {
         var typeId = this._request.body.type_id;
         var map = this._request.body.map;
 
-        var query = "INSERT INTO spirit_map_types_powers (spirit_types_id,spirit_powers_id,required) VALUES ";
+        var query = "INSERT INTO spirit_map_types_powers (spirit_types_id,spirit_powers_id,required,notes) VALUES ";
         var queryPieces = [];
         for(var i in map){
             if(i == "changed")continue;
-            queryPieces.push("(" + typeId + ", " + i + ", '" + map[i] + "')");
+            queryPieces.push("(" + typeId + ", " + i + ", '" + map[i].required + "', '" + map[i].notes+ "')");
         }
         query += queryPieces.join(",");
-        query += " ON DUPLICATE KEY UPDATE required = VALUES(required)";
+        query += " ON DUPLICATE KEY UPDATE required = VALUES(required), notes = VALUES(notes)";
         var rows = await SQL.load(query, function(){});
+        console.log(rows);
         this.setView({success:true, message:"Saved power map for "+typeId+"."});
     }
 };

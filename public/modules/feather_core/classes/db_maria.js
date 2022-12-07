@@ -11,8 +11,9 @@ async function load(query, callback){
         conn = await global.mysql.pool.getConnection();
         var rows = await conn.query(query);
         delete rows.meta;
-        callback(rows)
+        if(typeof callback == 'function')callback(rows);
     } catch (err) {
+        rows = err;
         throw err;
     } finally {
         if (conn) conn.end();

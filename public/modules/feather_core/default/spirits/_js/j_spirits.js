@@ -151,21 +151,29 @@ export function initVue(initData, components){
                 var optionalIds = [];
                 var map = this.powermap[spirit._id];
                 for(var id in map){
-                    if(map[id] == 'required'){
+                    if(map[id].required == 'required' || map[id].required == 'optional'){
                         requiredIds.push(id * 1);
-                    }else if(map[id] == 'optional'){
-                        optionalIds.push(id * 1);
                     }
                 }
                 for(var i in this.spirit_powers){
                     var curPower = this.spirit_powers[i];
                     if(requiredIds.includes(curPower._id)){
+                        curPower.notes = map[curPower._id].notes;
                         spirit.powers.required.push(curPower);
                     }else if(optionalIds.includes(curPower._id)){
+                        curPower.notes = map[curPower._id].notes;
                         spirit.powers.optional.push(curPower);
                     }
                 }
                 spirit.powers.numOptional = Math.floor(spirit.force/3);
+            },
+            getPowerName(power){
+                var result = power.name;
+                if(power.notes)result += " ("+power.notes+")";
+                console.log(power.name);
+                console.log(power.notes);
+                console.log(result);
+                return result;
             },
             pickPowers(spirit, spiritIndex){
                 this.optionalPowers.options.splice(0, Infinity);

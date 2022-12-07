@@ -208,18 +208,21 @@
                                 <th>{{power.name}}</th>
                                 <td>
                                     <label class="form-check-custom success">
-                                        <input type="radio" v-model="powermap[powermap.active][power._id]" v-on:change="map_power(powermap.active, power._id)" value="none">
+                                        <input type="radio" v-model="powermap[powermap.active][power._id].required" v-on:change="map_power(powermap.active, power._id)" value="none">
                                     </label>
                                 </td>
                                 <td>
                                     <label class="form-check-custom success">
-                                        <input type="radio" v-model="powermap[powermap.active][power._id]" v-on:change="map_power(powermap.active, power._id)" value="optional">
+                                        <input type="radio" v-model="powermap[powermap.active][power._id].required" v-on:change="map_power(powermap.active, power._id)" value="optional">
                                     </label>
                                 </td>
                                 <td>
                                     <label class="form-check-custom success">
-                                        <input type="radio" v-model="powermap[powermap.active][power._id]" v-on:change="map_power(powermap.active, power._id)" value="required">
+                                        <input type="radio" v-model="powermap[powermap.active][power._id].required" v-on:change="map_power(powermap.active, power._id)" value="required">
                                     </label>
+                                </td>
+                                <td>
+                                    <input class="form-control" v-model="powermap[powermap.active][power._id].notes" v-on:change="map_power(powermap.active, power._id)"/>
                                 </td>
                             </tr>
                         </tbody>
