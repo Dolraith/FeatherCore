@@ -166,8 +166,10 @@ export function initVue(initData, components){
                 var optionalIds = [];
                 var map = this.powermap[spirit._id];
                 for(var id in map){
-                    if(map[id].required == 'required' || map[id].required == 'optional'){
+                    if(map[id].required == 'required'){
                         requiredIds.push(id * 1);
+                    }else if(map[id].required == 'optional'){
+                        optionalIds.push(id * 1);
                     }
                 }
                 for(var i in this.spirit_powers){
