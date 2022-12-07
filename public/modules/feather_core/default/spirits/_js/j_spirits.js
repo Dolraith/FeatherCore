@@ -103,7 +103,7 @@ export function initVue(initData, components){
                 this.spiritList[index].charisma = Math.max(1,(1*force) + curDef.charisma);
                 this.spiritList[index].magic = Math.max(1,1*force);
                 this.spiritList[index].phys_init = this.calcInitiative(curDef.phys_init,force);
-                this.spiritList[index].astral_init = this.calcInitiative(curDef.phys_init,force);
+                this.spiritList[index].astral_init = this.calcInitiative(curDef.astral_init,force);
                 this.spiritList[index].condition_phys_max = Math.ceil((8+(this.spiritList[index].body/2)));
                 this.spiritList[index].condition_stun_max = Math.ceil((8+(this.spiritList[index].willpower/2)));
                 this.spiritList[index].condition_phys_cur = 0;
