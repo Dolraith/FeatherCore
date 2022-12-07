@@ -186,7 +186,7 @@
                     <ul class="nav flex-column border-right">
                         <button class="btn btn-primary btn-sm" v-bind:disabled="!(powermap.active != null && powermap[powermap.active].changed===true)" v-on:click="map_power_save()">Save</button>
                         <li class="nav-item" v-for="spirit_type in spirit_types">
-                            <a v-if="powermap.active!=spirit_type._id" href='#' class="nav-link" v-on:click="powermap.active=spirit_type._id">{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</a>
+                            <a v-if="powermap.active!=spirit_type._id" href='#' class="nav-link" v-on:click="activatePowermap(spirit_type._id)">{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</a>
                             <div v-if="powermap.active==spirit_type._id" class="nav-link bg-secondary" disabled>{{spirit_type.type}}-{{spirit_type.element}}{{powermap[spirit_type._id].changed==true?"*":""}}</div>
                         </li>
                         

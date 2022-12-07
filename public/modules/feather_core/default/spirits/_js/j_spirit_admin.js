@@ -196,6 +196,15 @@ export function initVue(initData, components){
                 });
                 var data = await fetch(request).then((response) => response.json());
                 console.log(data);
+            },
+            activatePowermap(typeId){
+                for(var i in this.spirit_powers){
+                    var powerId = this.spirit_powers[i]._id;
+                    if(this.powermap[typeId][powerId] == undefined){
+                        this.powermap[typeId][powerId] = {required:null,notes:''}
+                    }
+                }
+                this.powermap.active = typeId;
             }
         }
     });
