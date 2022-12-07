@@ -18,6 +18,21 @@ export function initVue(initData, components){
                 powerTooltip:{
                     show:false,
                     power:JSON.parse(JSON.stringify(initData.spirit_powers[0]))   
+                },
+                subtypes: {
+                    Insect:{
+                        Ant: "All physical damage done by ant spirits is also considered acid damage (see Acid Damage, p. 170, SR5). Ant spirits are highly dependent on their hive mentality and on its controlling force in particular. If a single ant spirit is ever isolated from all others of its hive (e.g., through physical distance or due to a mana barrier), or if the shaman or Queen of the hive is killed, the ant(s) suffer a –2 penalty on all tests.",
+                        Locust: "All locust spirits can fly and have the Flight skill, as well as the Devouring power (p. 194). Locust spirits are single-minded to the point of being oblivious to their surroundings. When fighting a foe or feeding, all locust spirits (except the Queen) have a –3 penalty to Perception Tests.",
+                        Thermite: "All termite spirits have the Reinforcement power (p. 198).",
+                        Wasp: "All wasp spirits can fly and have the Flight skill (p. 394, SR5) and the Venom power (p. 401, SR5).",
+                        Beetle: "When calculating the Hardened Armor value for a beetle’s Immunity to Normal Weapons, add +4 to the value. All beetle spirits also have the Mystic Armor power (p. 399, SR5).",
+                        Cicada: "All cicada spirits can fly, have the Flight skill (p. 394, SR5), and have the power of Sonic Projection (p. 199).",
+                        Firefly: "All firefly spirits can fly, have the Flight skill (p. 394, SR5), and have the Confusion power (p. 395, SR5)",
+                        Fly: "All Fly spirits have the Flight skill (p. 394, SR5), the Pestilence power (p. 197), and Immunity to Disease.",
+                        Mantis: "All female mantid spirits have the Energy Drain (Insect Spirit Force, Touch, Physical Damage) power (p. 195). Force drained in this manner can be spent as Karma to improve the skills and attributes of the spirit as per the rules for free spirits (p. 202). When a female mantid has gathered Force equal to its own, it can spend it to “give birth” to a new mantid spirit that inhabits a living vessel (see p. 135).",
+                        Mosquito: "All mosquito spirits have the Flight skill, “females” (as determined by the gamemaster) have the Essence Drain power (p. 396, SR5); some spirits may also have the Pestilence power (at the gamemaster’s discretion; see p. 197)",
+                        Roach: "All Roach spirits have +2 to Damage Resistance tests, and all have Allergy (Light, Mild) in addition to the normal insecticides Allergy."
+                    }
                 }
             };
             for(i in initData){
@@ -77,7 +92,7 @@ export function initVue(initData, components){
                     type:"Basic", element:"Air", force:1, powers:[], skills:[],
                     body:'', agility:'', reaction:'', trength:'', willpower:'', logic:'', intuition:'', charisma:'', magic:'',
                     phys_init:'', astral_init:'', damage_phys: 0, damage_stun: 0, condition_phys_max:0, condition_stun_max:0, condition_phys_cur:0, condition_stun_cur:0, cur_dmg_val:1,cur_dmg_mode:"phys", pool_modifier: 0,
-                    skills:[], skillDetails: false, powers: {required:[],optional:[],numOptional:0,picked:[]}
+                    skills:[], skillDetails: false, powers: {required:[],optional:[],numOptional:0,picked:[],selected_subtype:''}
                 });
                 this.calcSpirit(this.spiritList.length - 1)
             },
@@ -170,9 +185,6 @@ export function initVue(initData, components){
             getPowerName(power){
                 var result = power.name;
                 if(power.notes)result += " ("+power.notes+")";
-                console.log(power.name);
-                console.log(power.notes);
-                console.log(result);
                 return result;
             },
             pickPowers(spirit, spiritIndex){
@@ -240,10 +252,20 @@ export function initVue(initData, components){
             },
             forceTypeEleCompliance(index){
                 var type = this.spiritList[index].type;
+                this.spiritList[index].selected_subtype = '';
                 if(!this.elements[type].includes(this.spiritList[index].element)){
                     this.spiritList[index].element = this.elements[type][0];
                 }
                 this.calcSpirit(index);
+            },
+            getSubtypeList(spirit){
+                if(this.subtypes[spirit.type] == undefined) return null;
+                return this.subtypes[spirit.type];
+            },
+            getSubtypeText(type, selected_subtype){
+                if(this.subtypes[type] == undefined) return '';
+                if(this.subtypes[type][selected_subtype] == undefined) return '';
+                return this.subtypes[type][selected_subtype];
             },
             getSpiritVisibility(force){
                 if(force == 1)return "Minor spirit, not noticable."
@@ -273,16 +295,6 @@ export function initVue(initData, components){
                     result.push(spirit.skills[i].name);
                 }
                 return result.join(', ');
-            }
-        },
-        computed:{
-            calculatedSpirits: function(){
-                this.refreshKey++;
-                var spirits = [];
-                for(spirit in this.spiritList){
-                    
-                }
-                return spirits;
             }
         }
     });
