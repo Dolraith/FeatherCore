@@ -201,7 +201,7 @@ export function initVue(initData, components){
                 for(var i in this.spirit_powers){
                     var powerId = this.spirit_powers[i]._id;
                     if(this.powermap[typeId][powerId] == undefined){
-                        this.powermap[typeId][powerId] = {required:null,notes:''}
+                        this.powermap[typeId][powerId] = {required:'none',notes:''}
                     }
                 }
                 this.powermap.active = typeId;
