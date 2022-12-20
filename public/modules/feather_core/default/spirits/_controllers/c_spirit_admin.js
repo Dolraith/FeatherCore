@@ -8,8 +8,7 @@ var SQL = require(global.classPaths.sql);
 
 class CIndex extends Controller {
     async index(){
-        var bob = await(Data_User.id(2))
-        var id = this.checkLogin();
+        var id = this.checkLogin(this._request);
         if(id === false){
             this.setRedirect("/err/err403");
             return;

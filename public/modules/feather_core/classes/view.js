@@ -1,6 +1,6 @@
 const Utility = require('./utility');
 class view {
-    constructor(viewData){
+    constructor(viewData,permissions){
         this.dependencies = {
             js:[],
             css:[],
@@ -10,10 +10,12 @@ class view {
         }
         this._data = viewData;
         this._vueData = {}
+        this.permissions = permissions;
         this.header = 'modules/feather_core/default/_templates/header.html';
         this.footer = 'modules/feather_core/default/_templates/footer.html';
         this.template = null;
         this.vueRender = false;
+        this.init();
     }
     getPageTemplate(){
         var compiled_template = '';
@@ -31,6 +33,13 @@ class view {
             header = header.replace("<?tag_marker?>","<div id='vuemain'>");
             footer = footer.replace("<?tag_marker?>","</div>");
         }
+        
+        if(this.permissions.logged_in === false){
+            header = header.replace("<?secure?>","hidden");
+        }else{
+            header = header.replace("<?secure?>","");
+        }
+
         compiled_template+=header;
         if(this.template!==null){
             compiled_template+=Utility.getChunk(this.template);

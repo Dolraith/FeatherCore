@@ -47,7 +47,7 @@ class Controller{
             this._response.redirect(this._view);   
         }else{
             var viewClass = require(this._view);
-            var view = new viewClass(this._viewData);
+            var view = new viewClass(this._viewData,{logged_in:this.checkLogin()});
             this._response.send(ejs.render(view.getPageTemplate()));
         }
     }
