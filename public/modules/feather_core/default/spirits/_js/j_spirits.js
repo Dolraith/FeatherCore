@@ -5,6 +5,7 @@ export function initVue(initData, components){
     var vue = createApp({
         components:{
         },
+        template:"#vuetemplate",
         data() {
             var data = {
                 refreshKey:0,

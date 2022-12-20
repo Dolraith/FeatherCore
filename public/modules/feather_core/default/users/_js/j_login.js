@@ -4,6 +4,7 @@ window.onload = function(){new Vue({
         email:"",
         password:""
     }},
+    template:"#vuetemplate",
     methods:{
         async login(){
             const request = new Request("login/attempt",

@@ -13,20 +13,30 @@ class view {
         this.header = 'modules/feather_core/default/_templates/header.html';
         this.footer = 'modules/feather_core/default/_templates/footer.html';
         this.template = null;
+        this.vueRender = false;
     }
     getPageTemplate(){
         var compiled_template = '';
         var header = Utility.getChunk(this.header);
         header = header.replace("<?dependency_marker?>",this.getDependensies());
+
+        var footer = Utility.getChunk(this.footer);
+        footer = footer.replaceAll("<?data_marker?>", JSON.stringify(this._vueData) + "," + this.wrapComponents());
+        footer = footer.replaceAll("<?template_marker?>", this.getTemplates());
+
+        if(this.vueRender){
+            header = header.replace("<?tag_marker?>","<div id='vuemain'></div><template id='vuetemplate'><div>");
+            footer = footer.replace("<?tag_marker?>","</div></template>");
+        }else{
+            header = header.replace("<?tag_marker?>","<div id='vuemain'>");
+            footer = footer.replace("<?tag_marker?>","</div>");
+        }
         compiled_template+=header;
         if(this.template!==null){
             compiled_template+=Utility.getChunk(this.template);
         }
-        var footer = Utility.getChunk(this.footer);
-        footer = footer.replaceAll("<?data_marker?>", JSON.stringify(this._vueData) + "," + this.wrapComponents());
-        footer = footer.replaceAll("<?template_marker?>", this.getTemplates());
-        compiled_template+=footer;
 
+        compiled_template+=footer;
         return compiled_template;
     }
 
@@ -105,6 +115,8 @@ class view {
      * @param {string} type - if present, the dependency file array type. if absent signifies that it's a named dependency
      */
     addDependency(packageOrArray, type=null){
+        //toggle between body in div vs body in template
+        if(packageOrArray == 'vue') this.vueRender = true;
         if(type === null){
             this.addDependencyPackage(packageOrArray);
         }else{

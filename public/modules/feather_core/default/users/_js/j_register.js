@@ -5,6 +5,7 @@ window.onload = function(){new Vue({
         password:'',
         passwordConfirm:''
     }},
+    template:"#vuetemplate",
     methods:{
         async register(){
             if(this.password == ''){

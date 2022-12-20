@@ -22,6 +22,7 @@ export function initVue(initData, components){
             console.log(data);
             return data;
         },
+        template:"#vuetemplate",
         methods:{
             addType(){
                 this.spirit_types.push({
