@@ -29,7 +29,7 @@ const app = express();
 const portU = 80;
 const portS = 443;
 
-const static_extentions = ["jpg","js","css","scss","png","vue"];
+const static_extentions = ["jpg","js","css","scss","png","vue",'json',"svg"];
 
 global._router = router.getInstance();
 global.settings = Settings;
