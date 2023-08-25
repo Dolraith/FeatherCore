@@ -1,6 +1,6 @@
 [submodule "public/modules/Miko"]
 	path = public/modules/Miko
 	url = https://github.com/Dolraith/Miko.git
-[submodule "public/modules/SVaGRack"]
-	path = public/modules/SVaGRack
-	url = https://github.com/Dolraith/SVaGRack.git
+[submodule "public/modules/BoardNOrderSVG"]
+	path = public/modules/BoardNOrderSVG
+	url =  https://github.com/Dolraith/BoardNOrderSVG.git
