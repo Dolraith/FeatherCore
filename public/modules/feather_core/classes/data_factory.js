@@ -3,13 +3,12 @@ class Data_Factory {
     constructor(dataclass){
         this.dataclass = dataclass;
     }
-    async id(id = 0, callback){
-        user = new this.dataclass().loadOne("_id = " + id);
-        return user;
+    async id(id){
+        return await this.query("_id = " + id);
     }
     async query(query){
-        user = new this.dataclass().loadOne(query);
-        return user;
+        var data = await new this.dataclass().loadOne(query);
+        return data;
     }
     make(){
         return new this.dataclass();
@@ -18,6 +17,12 @@ class Data_Factory {
         example = this.make();
         if(ids.length < 1){return []};
         return await this.many_query("_id in [" + ids.join(",") + "]", flat);
+    }
+    async delete(id){
+        var example = this.make();
+        var query = "delete from " + example.table + " where _id="+id;
+        var rows = await SQL.save(query);
+        return (rows.affectedRows>0);
     }
     /**
      * Run a many-item query

@@ -30,6 +30,11 @@ class Controller{
         }
     }
 
+    sendFile(path){
+        this._mode = 'file';
+        this._view = path;
+    }
+
     async doAction(action){
         if(action in this && typeof this[action] === 'function'){
             await this[action]();
@@ -45,6 +50,8 @@ class Controller{
             this._response.send(this._view);
         }else if(this._mode == 'redirect'){
             this._response.redirect(this._view);   
+        }else if(this._mode == 'file'){
+            this._response.sendFile(this._view);
         }else{
             var viewClass = require(this._view);
             var view = new viewClass(this._viewData,{logged_in:this.checkLogin()});
