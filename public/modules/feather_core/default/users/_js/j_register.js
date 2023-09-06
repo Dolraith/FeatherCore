@@ -34,7 +34,6 @@ window.onload = function(){new Vue({
                 }
             );
             var data = await fetch(request).then((response) => response.json());
-            console.log(data);
             if(data.success){
                 alert("User created, poke Dol to get it activvated, currently making this invite only because is publicly accessible and there's permissions behind logging in. Also, don't wreck my stuff.");
             }else{

@@ -38,7 +38,6 @@ class dependency_dictionary{
         }
     }
     getComponentTemplate(componentName){
-        //console.log(this.components);
         if(componentName in this.components){
             if('template' in this.components[componentName]){
                 return this.components[componentName].template;

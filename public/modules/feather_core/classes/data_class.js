@@ -74,7 +74,6 @@ class Data_Class{
         else{
             fullQuerry = "INSERT INTO " + this.table + " SET " + cols.join(',') + ";"
             var result = await SQL.save(fullQuerry);
-            console.log(result);
             if(result == null)return null;
             this.data['_id'] = Number(result.insertId);
         } 

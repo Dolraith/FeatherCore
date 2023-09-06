@@ -19,7 +19,6 @@ window.onload = function(){new Vue({
             });
             var data = await fetch(request).then((response) => response.json());
             alert(data.message);
-            console.log(data);
         }
     }
 })}

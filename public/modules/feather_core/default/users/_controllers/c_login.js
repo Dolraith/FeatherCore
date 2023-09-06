@@ -6,8 +6,6 @@ const bcrypt = require('bcrypt');
 
 class CIndex extends Controller {
     async index(){
-        //var bob = await(Data_User.id(2))
-        //console.log(bob)
         this.setView('modules/feather_core/default/users/_views/v_login');
     }
     async attempt(){

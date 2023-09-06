@@ -32,6 +32,7 @@ class Data_Factory {
      */
     async many_query(query="",flat=false){
         var example = this.make();
+        var fullQuerry;
         if(query.length > 0)query = " where " + query;
         var fullQuerry = "select * from " + example.table + query;
         var rawResults = await SQL.load(fullQuerry,(sqlresult)=>{return sqlresult;});
@@ -49,6 +50,19 @@ class Data_Factory {
             return flatResults;
         }        
         return classResults;
+    }
+
+    /**
+     * Bare query, bare results. Unsafe. Does not check table
+     * @param {*} query 
+     */
+    async direct_query(query){
+        var rawResults = await SQL.load(query,(sqlresult)=>{return sqlresult;});
+        var results = [];
+        for(var item in rawResults){
+            results.push(rawResults[item]);
+        }
+        return rawResults;
     }
 
 }
