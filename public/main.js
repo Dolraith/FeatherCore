@@ -69,11 +69,11 @@ app.use(session({
   
     // Cookie Options
     maxAge: 31536000000//365 * 24 * 60 * 60 * 1000 // 24 hours
-  }))
+  }));
 app.use(favicon(Settings.getPathFavicon()));
 
-app.use(bp.json())
-app.use(bp.urlencoded({ extended: true }))
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
 
 //serve static files
 //app.use("/*", express.static('public',{extensions: ['js', 'css','png']}));
@@ -82,12 +82,12 @@ app.all("/*", (req, res) => {
 
     //check if static files
     var filepath = path.normalize(req.params[0]);
-    if(filepath[filepath.length-1] == '\\'){
+    if(filepath[filepath.length-1] === '\\'){
         filepath = filepath.slice(0, filepath.length - 1);
     }
-    if(filepath[0] == '.')filepath = filepath.slice(1);
+    if(filepath[0] === '.')filepath = filepath.slice(1);
 
-    if(filepath != '' && fs.existsSync(__dirname + "/" + filepath)){
+    if(filepath !== '' && fs.existsSync(__dirname + "/" + filepath)){
         parts = filepath.split(".");
         if(static_extentions.includes(parts[parts.length - 1])){
             file.serve(req, res);
@@ -162,7 +162,7 @@ function safify(url) {
     try{
         //if (url[0] === '.') url=url.substring(1);
         if (url === "")return "/";
-        return url
+        return url;
     }catch(ex){
         console.log("Ecountered exception.");
         console.log(ex);

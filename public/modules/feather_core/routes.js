@@ -8,5 +8,5 @@ global._router.setRoutes(['register'], 'modules/feather_core/default/users/_cont
 global._router.setRoutes(['err'], 'modules/feather_core/default/users/_controllers/c_errors');
 
 /* To be moved over to hoard */
-global._router.setRoutes(['spirits'], 'modules/feather_core/default/spirits/_controllers/c_spirits')
-global._router.setRoutes(['spirit_admin'], 'modules/feather_core/default/spirits/_controllers/c_spirit_admin')
+global._router.setRoutes(['spirits'], 'modules/Miko/_controllers/c_spirits')
+global._router.setRoutes(['spirit_admin'], 'modules/Miko/_controllers/c_spirit_admin')

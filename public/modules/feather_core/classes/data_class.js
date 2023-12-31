@@ -1,9 +1,11 @@
-var SQL = require(global.classPaths.sql)
+/* global global */
+
+var SQL = require(global.classPaths.sql);
 
 class Data_Class{
     constructor(query = "select *", callback = function(data){}){
-        this.table = "notable"
-        this.data = {}
+        this.table = "notable";
+        this.data = {};
         this.data["_id"] = null;
         this.data["_created"] = Date();
         this.data["_modified"] = Date();
@@ -17,8 +19,8 @@ class Data_Class{
 
     inflate(dictionary){
         for(var i in dictionary){
-            if(i == "_created" || i == "_modified")continue;
-            if(i == "_id" && dictionary[i] == "null")continue;
+            if(i === "_created" || i === "_modified")continue;
+            if(i === "_id" && dictionary[i] === "null")continue;
             this.set(i, dictionary[i]);
         }
     }
@@ -37,15 +39,15 @@ class Data_Class{
     }
 
     async load(){
-        new SQL(this.query + " from " + this.table, this.loaded)        
+        new SQL(this.query + " from " + this.table, this.loaded);        
     }
 
     loaded(){}
 
     async loadOne(query){
-        var fullQuerry = "select * from " + this.table + " where " + query + " limit 1"
-        await SQL.load(fullQuerry, this.loadedOne.bind(this))
-        if(this.data["_id"] == null){
+        var fullQuerry = "select * from " + this.table + " where " + query + " limit 1";
+        await SQL.load(fullQuerry, this.loadedOne.bind(this));
+        if(this.data["_id"] === null){
             return null;
         }
         return this;
@@ -53,7 +55,7 @@ class Data_Class{
 
     loadedOne(data){
         for(var key in data[0]){
-            this.data[key] = data[0][key]
+            this.data[key] = data[0][key];
         }
     }
 
@@ -62,22 +64,22 @@ class Data_Class{
         var cols = []
         var data = this.getData();
         for(var key in data){
-            if(key == "_modified" || key == "_created")continue;
-            if(key == "_id" && (data[key] == "null" || data[key] == null))continue;
+            if(key === "_modified" || key === "_created")continue;
+            if(key === "_id" && (data[key] === "null" || data[key] === null))continue;
             cols.push(" " + key + " = \"" + data[key] + "\"");
         }
         var fullQuerry = '';
-        if(data["_id"] != null){
-            fullQuerry = "UPDATE " + this.table + " SET " + cols.join(',') + " WHERE _id=" + data["_id"] + ";"
+        if(data["_id"] !== null){
+            fullQuerry = "UPDATE " + this.table + " SET " + cols.join(',') + " WHERE _id=" + data["_id"] + ";";
             var result = await SQL.save(fullQuerry);
         }
         else{
-            fullQuerry = "INSERT INTO " + this.table + " SET " + cols.join(',') + ";"
+            fullQuerry = "INSERT INTO " + this.table + " SET " + cols.join(',') + ";";
             var result = await SQL.save(fullQuerry);
-            if(result == null)return null;
+            if(result === null)return null;
             this.data['_id'] = Number(result.insertId);
         } 
         return this.data["_id"];
     }
 }
-module.exports = Data_Class
+module.exports = Data_Class;
