@@ -1,6 +1,8 @@
 /* global global */
-var Controller = require(global.classPaths.controller);
-var Data_User = require(global.classPaths.data.user);
+Controller = require(global.classPaths.controller);
+Data_User = require(global.classPaths.data.user);
+Data_Factory = require(global.classPaths.data_factory);
+
 const bcrypt = require('bcrypt');
 
 class CIndex extends Controller {
@@ -17,10 +19,11 @@ class CIndex extends Controller {
             this.setView({success:false,message:"Valid password needed."});
         }
 
-        var existant = await(Data_User.query("email=\"" + email + "\""));
+        const factory = new Data_Factory(Data_User);        
+        var existant = await factory.query('email="' + email + '"');
         if(existant === null){
             /** @type {Data_User} */
-            var user = Data_User.make();
+            var user = new Data_User();
             user.set("email",email);
             user.set("password",bcrypt.hashSync(password,10));
             var result = await user.save();

@@ -1,4 +1,6 @@
-var SQL = require(global.classPaths.sql)
+/* global global */
+
+var SQL = require(global.classPaths.sql);
 class Data_Factory {
     constructor(dataclass){
         this.dataclass = dataclass;
@@ -14,8 +16,7 @@ class Data_Factory {
         return new this.dataclass();
     }
     async many_ids(ids,flat=false){
-        example = this.make();
-        if(ids.length < 1){return []};
+        if(ids.length < 1){return [];};
         return await this.many_query("_id in [" + ids.join(",") + "]", flat);
     }
     async delete(id){

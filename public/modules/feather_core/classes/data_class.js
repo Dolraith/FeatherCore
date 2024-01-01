@@ -58,7 +58,7 @@ class Data_Class{
             this.data[key] = data[0][key];
         }
     }
-
+    
     async save(){
         this.data["_modified"] = Date();
         var cols = []

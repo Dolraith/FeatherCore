@@ -1,0 +1,12 @@
+<table class="table table-striped col-8">
+    <thead>
+        <th>User Email</th>
+        <th>Active?</th>
+    </thead>
+    <tr v-for="user of users">
+        <td>{{user.email}}</td>
+        <td>
+            <btn class='btn btn-primary' v-on:click='flipActive(user)'>{{user.active==1?"Deactivate":"Activate"}}</btn>
+        </td>
+    </tr>
+</table>

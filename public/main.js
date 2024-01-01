@@ -44,10 +44,11 @@ global.classPaths = {
         spirits:{
             type:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_type",
             power:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_power",
-            skill:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_skill",
+            skill:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_skill"
         }
     },
-    data_super: __dirname + "/modules/feather_core/classes/data_class"
+    data_super: __dirname + "/modules/feather_core/classes/data_class",
+    data_factory: __dirname + "/modules/feather_core/classes/data_factory"
 };
 
 var file = new(staticServer.Server)(__dirname);

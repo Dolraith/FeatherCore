@@ -1,7 +1,7 @@
 /* global global */
-const Controller = require(global.classPaths.controller);
-/** @type {Data_User} */
-const Data_User = require(global.classPaths.data.user);
+Controller = require(global.classPaths.controller);
+Data_User = require(global.classPaths.data.user);
+Data_Factory = require(global.classPaths.data_factory);
 const bcrypt = require('bcrypt');
 
 class CIndex extends Controller {
@@ -11,12 +11,13 @@ class CIndex extends Controller {
     async attempt(){
         var email = this._request.body.email;
         var password = this._request.body.password;
-        var user = await Data_User.query("email=\""+email+"\"");
+        
+        const factory = new Data_Factory(Data_User);        
+        var user = await factory.query('email="' + email + '"');
         if(user === null){
             this.setView({messagge:"No login for you!", success:false});
         }
         else if(bcrypt.compareSync(password,user.get("password"))){
-            console.log(user);
             if(user.get("active") === 1){
                 this.setView({message:'Logged in!', success:true, _id:user._id});
                 this.login(user.data["_id"]);
