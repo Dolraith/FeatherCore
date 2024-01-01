@@ -1,6 +1,6 @@
 /* global global */
 Controller = require(global.classPaths.controller);
-Data_User = require(global.classPaths.data.user);
+Data_User = require(global.classPaths.data.core.user);
 Data_Factory = require(global.classPaths.data_factory);
 const bcrypt = require('bcrypt');
 
@@ -20,6 +20,7 @@ class CIndex extends Controller {
         else if(bcrypt.compareSync(password,user.get("password"))){
             if(user.get("active") === 1){
                 this.setView({message:'Logged in!', success:true, _id:user._id});
+                global._permissions.clearPermissions();
                 this.login(user.data["_id"]);
             }else{
                 this.setView({message:"Your user is not active, sorry.", success:false});

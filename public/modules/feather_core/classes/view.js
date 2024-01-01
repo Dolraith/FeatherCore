@@ -1,3 +1,5 @@
+/* global global */
+
 const Utility = require('./utility');
 class view {
     constructor(viewData,permissions){
@@ -7,9 +9,9 @@ class view {
             named:[],
             modules:[],
             components:[]
-        }
+        };
         this._data = viewData;
-        this._vueData = {}
+        this._vueData = {};
         this.permissions = permissions;
         this.header = 'modules/feather_core/_templates/header.html';
         this.footer = 'modules/feather_core/_templates/footer.html';
@@ -21,6 +23,7 @@ class view {
         var compiled_template = '';
         var header = Utility.getChunk(this.header);
         header = header.replace("<?dependency_marker?>",this.getDependensies());
+        header = header.replace("<?nav_marker>",global._router.getNavs());
 
         var footer = Utility.getChunk(this.footer);
         footer = footer.replaceAll("<?data_marker?>", JSON.stringify(this._vueData) + "," + this.wrapComponents());

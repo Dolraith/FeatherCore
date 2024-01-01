@@ -1,6 +1,6 @@
 /* global global */
 Controller = require(global.classPaths.controller);
-Data_User = require(global.classPaths.data.user);
+Data_User = require(global.classPaths.data.core.user);
 Data_Factory = require(global.classPaths.data_factory);
 
 const bcrypt = require('bcrypt');
@@ -27,7 +27,7 @@ class CIndex extends Controller {
             user.set("email",email);
             user.set("password",bcrypt.hashSync(password,10));
             var result = await user.save();
-            this.setView({success:true,_id:user.get("_id")});
+            this.setView({success:true,_id:result});
             return;
         }else{
             this.setView({success:false, message:"Duplicate User Email"});

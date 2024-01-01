@@ -22,7 +22,7 @@ window.onload = function(){new Vue({
             if(data.success){
                 document.location.href="/";
             }else{
-                console.log(data);
+                alert(data.message);
             }
         }
     }

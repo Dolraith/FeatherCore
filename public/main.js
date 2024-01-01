@@ -24,6 +24,7 @@ const staticServer = require('node-static');
 const dependency_dictionary = require('./modules/feather_core/classes/dependency_dictionary');
 const Settings = require("./settings.js");
 const favicon = require("serve-favicon");
+const Permissions = require("./modules/feather_core/classes/permissions");
 //--------
 const app = express();
 const portU = 80;
@@ -35,21 +36,17 @@ global._router = router.getInstance();
 global.settings = Settings;
 global.server_root = __dirname;
 global._dependency_dictionary = new dependency_dictionary();
+//data classpaths populated in module.js files
 global.classPaths = {
     controller: __dirname + "/modules/feather_core/classes/controller",
     view: __dirname + "/modules/feather_core/classes/view",
     sql: __dirname + "/modules/feather_core/classes/db_maria",
-    data: {
-        user: __dirname + "/modules/feather_core/classes/data/data_user",
-        spirits:{
-            type:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_type",
-            power:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_power",
-            skill:__dirname + "/modules/feather_core/classes/data/spirits/data_spirit_skill"
-        }
-    },
+    data: {},
     data_super: __dirname + "/modules/feather_core/classes/data_class",
     data_factory: __dirname + "/modules/feather_core/classes/data_factory"
 };
+//this might need to load stuff from db, so has to be under the mysql declaration
+global._permissions = new Permissions();
 
 var file = new(staticServer.Server)(__dirname);
 //var sess_options = {
@@ -99,6 +96,19 @@ app.all("/*", (req, res) => {
         //Set up dependencies
         //module dependencies
         glob(globroot + "dependencies.js", {}, (err, files) => {
+            if (err) {
+                //TODO: Handle errors
+                res.send(
+                    "Dependency files are incorrectly set up. Please contact a site administrator."
+                );
+            }
+            for (var file of files) {
+                require(file);
+            }
+        });
+        
+        //misc module config
+        glob(globroot + "module.js", {}, (err, files) => {
             if (err) {
                 //TODO: Handle errors
                 res.send(

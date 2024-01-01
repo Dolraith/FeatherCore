@@ -8,3 +8,5 @@ global._router.setRoutes(['register'], 'modules/feather_core/users/_controllers/
 
 /* Errors */
 global._router.setRoutes(['err'], 'modules/feather_core/users/_controllers/c_errors');
+
+

@@ -9,7 +9,6 @@ class v_index extends View{
         this.setTemplate('modules/feather_core/_templates/t_index.html');
         
         this.setVueData("user", this.getDataProp("user"));
-        console.log(this.getDataProp("user"));
     }    
 }
 module.exports = v_index;

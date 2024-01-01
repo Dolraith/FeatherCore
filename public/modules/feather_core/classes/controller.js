@@ -4,6 +4,7 @@ const ejs = require('ejs');
 class Controller{
     constructor(request, response, action = null){
         this._request = request;
+        global._permissions._request = request;
         this._response = response;
         this._body = '';
         this._view = null;
@@ -54,7 +55,7 @@ class Controller{
             this._response.sendFile(this._view);
         }else{
             var viewClass = require(this._view);
-            var view = new viewClass(this._viewData,{logged_in:this.checkLogin()});
+            var view = new viewClass(this._viewData,{logged_in:await this.checkLogin()});
             this._response.send(ejs.render(view.getPageTemplate()));
         }
     }
@@ -77,10 +78,20 @@ class Controller{
         this._request.session.user_id = null;
     }
 
-    checkLogin(){
-        if(this._request.session === undefined)return false;
-        if(this._request.session.user_id === undefined || this._request.session.user_id === null)return false;
-        else return this._request.session.user_id;
+    /**
+     * syntactic sugar for global._permissions.checkPermission("login");
+     * @returns {nm$_controller.Controller._request.session.user_id|Boolean}
+     */
+    async checkLogin(){
+        return (await global._permissions.checkPermission("login"));
+    }
+    
+    async getUserId(){
+        if(await global._permissions.checkPermission("login")){
+            return this._request.session.user_id;
+        }else{
+            return null;
+        }
     }
 }
 module.exports = Controller;

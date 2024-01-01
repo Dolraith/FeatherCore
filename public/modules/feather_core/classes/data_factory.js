@@ -1,5 +1,4 @@
 /* global global */
-
 var SQL = require(global.classPaths.sql);
 class Data_Factory {
     constructor(dataclass){
@@ -32,11 +31,17 @@ class Data_Factory {
      * @returns an array of results
      */
     async many_query(query="",flat=false){
+        if(query === null){
+            query = "";
+        }
         var example = this.make();
         var fullQuerry;
         if(query.length > 0)query = " where " + query;
         var fullQuerry = "select * from " + example.table + query;
         var rawResults = await SQL.load(fullQuerry,(sqlresult)=>{return sqlresult;});
+        if(rawResults.errno){
+            throw new Error(rawResults.text);
+        }
         var classResults = []; 
         for(var item in rawResults){
             var cur = new this.dataclass();
