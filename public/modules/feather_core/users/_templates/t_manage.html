@@ -2,11 +2,37 @@
     <thead>
         <th>User Email</th>
         <th>Active?</th>
+        <th>Permissions</th>
     </thead>
     <tr v-for="user of users">
         <td>{{user.email}}</td>
         <td>
-            <btn class='btn btn-primary' v-on:click='flipActive(user)'>{{user.active==1?"Deactivate":"Activate"}}</btn>
+            <button v-bind:class='(user.active==1?"btn btn-warning":"btn btn-success")' v-on:click='flipActive(user)'>{{user.active==1?"Deactivate":"Activate"}}</button>
+        </td>
+        <td>
+            <button class='btn btn-primary' v-on:click='editPermissions(user)' data-bs-target="#myModal" data-bs-toggle="modal">Edit Permissions</button>
         </td>
     </tr>
 </table>
+
+
+<div class="modal " id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{selectedUser.email}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr v-for="permission of allPermissions">
+                            <td>{{permission.label}}</td>
+                            <td>
+                                <input class="form-check-input" v-bind:checked="curPermissions[selectedUser._id][permission.name].active==1" type="checkbox" v-on:change="map_permission(permission.name)"></input>  
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

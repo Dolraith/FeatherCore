@@ -6,7 +6,8 @@ class Data_User extends Data_Class{
         this.table = "core_permission";
         this.fields({
             user_id:0,
-            permission_name:""
+            permission_name:"",
+            active:1
         });
     }
 }

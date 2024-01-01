@@ -9,6 +9,8 @@ class v_manage extends View{
         this.setTemplate('modules/feather_core/users/_templates/t_manage.html');
         
         this.setVueData("users", this.getDataProp("users"));
+        this.setVueData("allPermissions",global._permissions.getAllPermissions());  
+        this.setVueData("curPermissions",this.getDataProp("curPermissions"));
     }    
 }
 module.exports = v_manage;

@@ -61,7 +61,7 @@ class Data_Class{
     
     async save(){
         this.data["_modified"] = Date();
-        var cols = []
+        var cols = [];
         var data = this.getData();
         for(var key in data){
             if(key === "_modified" || key === "_created")continue;

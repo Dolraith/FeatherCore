@@ -6,10 +6,31 @@ export function initVue(initData, components){
             for(i in initData){
                 data[i] = initData[i];
             }
+            data.selectedUser = data.users[0];
+            console.log(data.curPermissions);
             return data;
+            
         },
         template:"#vuetemplate",
         methods:{
+            editPermissions(user){
+                this.selectedUser = user;
+            },
+            async map_permission(permissionName){
+                var curUser = this.selectedUser._id;
+                this.curPermissions[curUser][permissionName].active = 1- this.curPermissions[curUser][permissionName].active;
+                const request = new Request(
+                    "manage_users/save_permission",
+                    {
+                        method: "POST",
+                        headers: new Headers({'content-type': 'application/json'}),
+                        cache: "default",
+                        body: JSON.stringify(this.curPermissions[curUser][permissionName])
+                    }
+                );
+                var data = await fetch(request).then((response) => response.json());
+            },
+            
             async flipActive(user){
                 if(user.active){
                     const body = JSON.stringify({user_id:user._id,active:0});
