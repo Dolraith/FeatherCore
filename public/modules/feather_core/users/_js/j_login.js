@@ -3,7 +3,8 @@ window.onload = function(){new Vue({
     data(){return{
         email:"",
         password:""
-    }},
+        };
+    },
     template:"#vuetemplate",
     methods:{
         async login(){
@@ -14,11 +15,15 @@ window.onload = function(){new Vue({
                 cache: "default",
                 body: JSON.stringify({
                     email:this.email,
-                    password:this.password,
+                    password:this.password
                 })
             });
             var data = await fetch(request).then((response) => response.json());
-            alert(data.message);
+            if(data.success){
+                document.location.href="/";
+            }else{
+                console.log(data);
+            }
         }
     }
-})}
+});};

@@ -7,9 +7,9 @@ class Controller{
         this._response = response;
         this._body = '';
         this._view = null;
-        this._viewData = {}
+        this._viewData = {};
         this._mode = 'html';
-        this.doAction(action)
+        this.doAction(action);
     }
 
     setViewData(prop, value){
@@ -22,7 +22,7 @@ class Controller{
     }
 
     setView(viewPath){
-        if(typeof(viewPath) == "object"){
+        if(typeof(viewPath) === "object"){
             this._view = JSON.stringify(viewPath);
             this._mode = 'json';
         }else{
@@ -46,11 +46,11 @@ class Controller{
     async viewComposit(){
         if(this._view === null){
             this._response.send("Critical Error - no view set for controller.");
-        }else if(this._mode == 'json'){
+        }else if(this._mode === 'json'){
             this._response.send(this._view);
-        }else if(this._mode == 'redirect'){
+        }else if(this._mode === 'redirect'){
             this._response.redirect(this._view);   
-        }else if(this._mode == 'file'){
+        }else if(this._mode === 'file'){
             this._response.sendFile(this._view);
         }else{
             var viewClass = require(this._view);
@@ -65,17 +65,21 @@ class Controller{
             this._view = error;
             this.viewComposit();
         }else{
-            this._response.send("<html>" + error + "</html>")
+            this._response.send("<html>" + error + "</html>");
         }
     }
 
     login(_id){
         this._request.session.user_id = _id;
     }
+    
+    logout(){
+        this._request.session.user_id = null;
+    }
 
     checkLogin(){
-        if(this._request.session == undefined)return false;
-        if(this._request.session.user_id == undefined)return false;
+        if(this._request.session === undefined)return false;
+        if(this._request.session.user_id === undefined || this._request.session.user_id === null)return false;
         else return this._request.session.user_id;
     }
 }

@@ -11,8 +11,8 @@ class view {
         this._data = viewData;
         this._vueData = {}
         this.permissions = permissions;
-        this.header = 'modules/feather_core/default/_templates/header.html';
-        this.footer = 'modules/feather_core/default/_templates/footer.html';
+        this.header = 'modules/feather_core/_templates/header.html';
+        this.footer = 'modules/feather_core/_templates/footer.html';
         this.template = null;
         this.vueRender = false;
         this.init();

@@ -25,6 +25,6 @@ global._dependency_dictionary.setDependency(
 //setComponent ({name:name, js:'', css:[], template:''})
 global._dependency_dictionary.setComponent({
     name:'Counter',
-    js:'/modules/feather_core/default/_vueComponents/counter.js',
-    template: 'modules/feather_core/default/_vueComponents/counter.template'
+    js:'/modules/feather_core/_vueComponents/counter.js',
+    template: 'modules/feather_core/_vueComponents/counter.template'
 });

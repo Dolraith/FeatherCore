@@ -4,19 +4,19 @@ window.onload = function(){new Vue({
         email:'',
         password:'',
         passwordConfirm:''
-    }},
+    };},
     template:"#vuetemplate",
     methods:{
         async register(){
-            if(this.password == ''){
+            if(this.password === ''){
                 alert("Need a password.");
                 return;
             }
-            if(this.email == ''){
+            if(this.email === ''){
                 alert("Need an email.");
                 return;
             }
-            if(this.password != this.passwordConfirm){
+            if(this.password !== this.passwordConfirm){
                 alert("Passwords don't match, fixit.");
                 return;
             }
@@ -28,7 +28,7 @@ window.onload = function(){new Vue({
                   cache: "default",
                   body: JSON.stringify({
                     email:this.email,
-                    password:this.password,
+                    password:this.password
 
                 })
                 }
@@ -42,5 +42,5 @@ window.onload = function(){new Vue({
             
         }
     }
-})
-}
+});
+};

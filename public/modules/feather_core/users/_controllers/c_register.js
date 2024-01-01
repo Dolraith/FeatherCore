@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 class CIndex extends Controller {
     async index(){
-        this.setView('modules/feather_core/default/users/_views/v_register');
+        this.setView('modules/feather_core/users/_views/v_register');
     }
     async register(){
         var email = this._request.body.email;
@@ -27,8 +27,8 @@ class CIndex extends Controller {
             this.setView({success:true,_id:user.get("_id")});
             return;
         }else{
-            this.setView({success:false, message:"Duplicate User Email"})
+            this.setView({success:false, message:"Duplicate User Email"});
         }      
     }
 };
-module.exports=CIndex
+module.exports=CIndex;
