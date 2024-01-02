@@ -34,23 +34,29 @@ class RouterInner {
         }
     }
     
-    setNav(nav_level, route, text, permission) {
-        //TODO: permissions
+    setNav(module, route, text, permission) {
         const nav_item = "<li class='nav-item'><a class='nav-link' href='"+route+"'>"+text+"</a></li>\n";
-        this.nav[nav_level].push(nav_item);
+        if(this.nav[module] === undefined){
+            this.nav[module] = [];
+        }
+        this.nav[module].push({permission:permission,nav_item:nav_item});
     }
     /**
      * Returns all registered nav items.
      * @returns {String|RouterInner.getNavs.result}
      */
-    getNavs(){
+    async getNavs(){
         var result = "";
-        for(var section in this.nav){
-            result += "<h3>"+section+"</h3>\n";
+        var sections = Object.keys(this.nav).sort();
+        for(var section_name of sections){
+            result += "<h3>"+section_name+"</h3>\n";
             result += "<div class='navbar'>\n";
             result += "<ul class='navbar-nav'>";
-            for(var item of this.nav[section]){
-                result += item;
+            for(var item of this.nav[section_name]){
+                if(await global._permissions.checkPermission(item.permission)){
+                    result += item.nav_item;
+                }
+                                
             }
             result += "</ul>";
             result += "</div>";

@@ -43,25 +43,31 @@ class Permissions{
             if(this._request.session !== undefined){
                 if(this._request.session.user_id){
                     //the login permission
-                    this.cur_permissions.push("login");
+                    this.cur_permissions.push({active:1,permission_name:"login"});
                     var permissions = await new Data_Factory(Core_Permission).many_query("user_id="+this._request.session.user_id, true);
                     for(var item of permissions){
-                        this.cur_permissions.push(item.permission_name);
+                        this.cur_permissions.push(item);
                     }
-                }
-            }
+                }else this.cur_permissions.push({active:1,permission_name:"logout"});                        
+            }else this.cur_permissions.push({active:1,permission_name:"logout"});                        
         }
         return this.cur_permissions;
     }
     
     /**
      * Checks if current user has the asked-for permission.
-     * @param {string} permission
+     * @param {string} permission - permission_name to check, return true if null
      * @returns {bool} true if yes, false if no
      */
-    async checkPermission(permission){
+    async checkPermission(permission){        
+        if(permission === null)return true;
         var perm = await this.getCurPermissions();
-        return (await this.getCurPermissions()).includes(permission);
+        for(var item of perm){
+            if(item.permission_name === permission && item.active === 1){
+                return true;
+            }
+        }
+        return false;
     }
 }
 module.exports = Permissions;

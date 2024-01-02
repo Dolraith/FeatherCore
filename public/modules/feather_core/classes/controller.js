@@ -56,7 +56,7 @@ class Controller{
         }else{
             var viewClass = require(this._view);
             var view = new viewClass(this._viewData,{logged_in:await this.checkLogin()});
-            this._response.send(ejs.render(view.getPageTemplate()));
+            this._response.send(ejs.render(await view.getPageTemplate()));
         }
     }
 

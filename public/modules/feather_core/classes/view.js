@@ -19,11 +19,11 @@ class view {
         this.vueRender = false;
         this.init();
     }
-    getPageTemplate(){
+    async getPageTemplate(){
         var compiled_template = '';
         var header = Utility.getChunk(this.header);
         header = header.replace("<?dependency_marker?>",this.getDependensies());
-        header = header.replace("<?nav_marker>",global._router.getNavs());
+        header = header.replace("<?nav_marker?>",await global._router.getNavs());
 
         var footer = Utility.getChunk(this.footer);
         footer = footer.replaceAll("<?data_marker?>", JSON.stringify(this._vueData) + "," + this.wrapComponents());

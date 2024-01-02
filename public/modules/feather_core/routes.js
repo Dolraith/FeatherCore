@@ -9,4 +9,8 @@ global._router.setRoutes(['register'], 'modules/feather_core/users/_controllers/
 /* Errors */
 global._router.setRoutes(['err'], 'modules/feather_core/users/_controllers/c_errors');
 
-
+/* Navbar config */
+global._router.setNav("Core", "/manage_users", "Manage Users", "core_admin");
+global._router.setNav("Core", "/profile", "User Profile", "login");
+global._router.setNav("Core", "/login", "Log In", "logout");
+global._router.setNav("Core", "/logout", "Log Out", "login");
