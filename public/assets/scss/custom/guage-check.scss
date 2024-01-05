@@ -1,0 +1,182 @@
+//
+// Check/radio
+//
+
+//defaults:
+
+$guage-check-input-width:                  1em;
+$guage-check-min-height:                   $font-size-base * $line-height-base;
+$guage-check-padding-start:                $guage-check-input-width; //+ .5em
+$guage-check-margin-bottom:                .125rem;
+$guage-check-label-color:                  null;
+$guage-check-label-cursor:                 null;
+$guage-check-transition:                   null;
+
+$guage-check-input-active-filter:          brightness(90%);
+
+$guage-check-input-bg:                     $input-bg; //$green
+$guage-check-input-border:                 1px solid rgba($black, .25);
+$guage-check-input-border-radius:          .25em;
+$guage-check-radio-border-radius:          50%;
+$guage-check-input-focus-border:           $input-focus-border-color;
+$guage-check-input-focus-box-shadow:       $input-btn-focus-box-shadow;
+
+//$guage-check-input-checked-color:          $component-active-color;
+$guage-check-input-checked-color:          $red;
+
+$guage-check-input-checked-bg-color:       $component-active-bg;
+$guage-check-input-checked-border-color:   $guage-check-input-checked-bg-color;
+$guage-check-input-checked-bg-image:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'></svg>");
+$guage-check-radio-checked-bg-image:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='#{$guage-check-input-checked-color}'/></svg>");
+
+$guage-check-input-indeterminate-color:          $component-active-color;
+$guage-check-input-indeterminate-bg-color:       $component-active-bg;
+$guage-check-input-indeterminate-border-color:   $guage-check-input-indeterminate-bg-color;
+$guage-check-input-indeterminate-bg-image:       url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill='none' stroke='#{$guage-check-input-indeterminate-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/></svg>");
+
+$guage-check-input-disabled-opacity:        .9;
+$guage-check-label-disabled-opacity:        $guage-check-input-disabled-opacity;
+$guage-check-btn-check-disabled-opacity:    $btn-disabled-opacity;
+
+$guage-check-inline-margin-end:  0; //  1rem;
+
+.guage-checked-red {
+    --#{$prefix}guage-check-checked-bg: #{$red} ;
+    --#{$prefix}guage-check-checked-border-color: #{$red};
+}
+
+.guage-checked-yellow {
+    --#{$prefix}guage-check-checked-bg: #{$yellow} ;
+    --#{$prefix}guage-check-checked-border-color: #{$yellow};
+}
+
+.guage-check-green {
+    --#{$prefix}guage-check-bg: #{$green} !important;
+}
+
+.guage-check {
+    --#{$prefix}guage-check-checked-bg: #{$guage-check-input-checked-bg-color};
+    --#{$prefix}guage-check-checked-border-color: #{$guage-check-input-checked-border-color};
+    --#{$prefix}guage-check-checked-check-color: #{$guage-check-input-checked-color};
+
+
+    display: block;
+    min-height: $guage-check-min-height;
+    padding-left: $guage-check-padding-start;
+    margin-bottom: $guage-check-margin-bottom;
+  
+    .guage-check-input {
+      float: left;
+      margin-left: $guage-check-padding-start * -1;
+    }
+  }
+  
+  .guage-check-reverse {
+    padding-right: $guage-check-padding-start;
+    padding-left: 0;
+    text-align: right;
+  
+    .guage-check-input {
+      float: right;
+      margin-right: $guage-check-padding-start * -1;
+      margin-left: 0;
+    }
+  }
+  
+  .guage-check-input {
+    --#{$prefix}guage-check-bg: #{$guage-check-input-bg};
+  
+    flex-shrink: 0;
+    width: $guage-check-input-width;
+    height: $guage-check-input-width;
+    margin-top: ($line-height-base - $guage-check-input-width) * .5; // line-height minus check height
+    vertical-align: top;
+    appearance: none;
+    background-color: var(--#{$prefix}guage-check-bg);
+    background-image: var(--#{$prefix}guage-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: $guage-check-input-border;
+    print-color-adjust: exact; // Keep themed appearance for print
+    @include transition($guage-check-transition);
+  
+    &[type="checkbox"] {
+      @include border-radius($guage-check-input-border-radius);
+    }
+  
+    &[type="radio"] {
+      // stylelint-disable-next-line property-disallowed-list
+      border-radius: $guage-check-radio-border-radius;
+    }
+  
+    &:active {
+      filter: $guage-check-input-active-filter;
+    }
+  
+    &:focus {
+      border-color: $guage-check-input-focus-border;
+      outline: 0;
+      box-shadow: $guage-check-input-focus-box-shadow;
+    }
+  
+    &:checked {
+      background-color: var(--#{$prefix}guage-check-checked-bg);
+      border-color: var(--#{$prefix}guage-check-checked-border-color);
+  
+      &[type="checkbox"] {
+        @if $enable-gradients {
+          --#{$prefix}guage-check-bg-image: #{escape-svg($guage-check-input-checked-bg-image)}, var(--#{$prefix}gradient);
+        } @else {
+          --#{$prefix}guage-check-bg-image: #{escape-svg($guage-check-input-checked-bg-image)};
+        }
+      }
+  
+      &[type="radio"] {
+        @if $enable-gradients {
+          --#{$prefix}guage-check-bg-image: #{escape-svg($guage-check-radio-checked-bg-image)}, var(--#{$prefix}gradient);
+        } @else {
+          --#{$prefix}guage-check-bg-image: #{escape-svg($guage-check-radio-checked-bg-image)};
+        }
+      }
+    }
+  
+    &[type="checkbox"]:indeterminate {
+      background-color: $guage-check-input-indeterminate-bg-color;
+      border-color: $guage-check-input-indeterminate-border-color;
+  
+      @if $enable-gradients {
+        --#{$prefix}guage-check-bg-image: #{escape-svg($guage-check-input-indeterminate-bg-image)}, var(--#{$prefix}gradient);
+      } @else {
+        --#{$prefix}guage-check-bg-image: #{escape-svg($guage-check-input-indeterminate-bg-image)};
+      }
+    }
+  
+    &:disabled {
+      pointer-events: none;
+      filter: none;
+      opacity: $guage-check-input-disabled-opacity;
+    }
+  
+    // Use disabled attribute in addition of :disabled pseudo-class
+    // See: https://github.com/twbs/bootstrap/issues/28247
+    &[disabled],
+    &:disabled {
+      ~ .guage-check-label {
+        cursor: default;
+        opacity: $guage-check-label-disabled-opacity;
+      }
+    }
+  }
+  
+  .guage-check-label {
+    color: $guage-check-label-color;
+    cursor: $guage-check-label-cursor;
+  }
+  
+  
+  .guage-check-inline {
+    display: inline-block;
+    margin-right: $guage-check-inline-margin-end;
+  }
+  

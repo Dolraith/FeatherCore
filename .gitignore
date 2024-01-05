@@ -1,2 +1,6 @@
 nbproject/
 tmp/
+node_modules/
+.history/
+.sass-cache/
+yarn.lock
